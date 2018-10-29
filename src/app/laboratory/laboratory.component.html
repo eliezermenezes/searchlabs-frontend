@@ -1,0 +1,47 @@
+<section class="statistic">
+    <div class="section__content section__content--p30">
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-primary btn-floating" (click)="addLaboratory()">
+                    <fa-icon icon='plus' size='2x'></fa-icon>
+                </button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-card">
+                    <thead class="__thead">
+                        <tr>
+                            <th> Nome </th>
+                            <th> Localização </th>
+                            <th> Data de cadastro </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="__tbody">
+                        <tr class="_tr__shadow" *ngFor="let lab of laboratories; let num = index">
+                            <td> {{ lab.name | uppercase }} </td>
+                            <td>
+                                {{ lab.localization | uppercase }}
+                            </td>
+                            <td>
+                                {{ lab.createdAt | date: 'dd/MM/yyyy' }}
+                            </td>
+                            <td>
+                                <div class="__buttons">
+                                    <button type="button" class="btn btn-outline-success" (click)="editLaboratory(lab)">
+                                        Editar
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger">
+                                        Remover
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="spacer"></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
