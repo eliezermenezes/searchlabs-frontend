@@ -12,7 +12,7 @@ export class UserService {
     public pathAPI: string;
 
     constructor(private http: HttpClient) {
-        this.pathAPI = `${environment.URL_SEARCHLABS}user`;
+        this.pathAPI = `${environment.URL_SEARCHLABS}users`;
     }
 
     public async list() {

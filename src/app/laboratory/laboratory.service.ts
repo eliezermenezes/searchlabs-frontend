@@ -11,7 +11,7 @@ export class LaboratoryService {
     public urlBase: string;
 
     constructor(private http: HttpClient) {
-        this.urlBase = `${environment.URL_SEARCHLABS}laboratory`;
+        this.urlBase = `${environment.URL_SEARCHLABS}laboratories`;
     }
 
     public async list() {
