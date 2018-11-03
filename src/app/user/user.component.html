@@ -1,70 +1,36 @@
 <section class="statistic">
-    <div class="section__content section__content--p30">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-primary btn-floating" (click)="addUser()">
-                        <fa-icon icon='user-plus' size='2x'></fa-icon>
-                    </button>
-                </div>
-                <div class="col-md-12">
-                    <div class="user-data" *ngIf="!noResults">
-                        <div class="table-responsive table-data">
-                            <table class="table">
-                                <thead class="__header">
-                                    <tr>
-                                        <td>Nome</td>
-                                        <td>Sexo</td>
-                                        <td>N° celular</td>
-                                        <td>Perfil</td>
-                                        <td>Aniversário</td>
-                                        <td>Data de Cadastro</td>
-                                        <td>ações </td>
-                                    </tr>
-                                </thead>
-                                <tbody class="__body" *ngIf="!noResults">
-                                    <tr *ngFor="let user of users; let num = index">
-                                        <td>
-                                            <h5 class="__data">{{ user.name }} {{ user.family_name }}</h5>
-                                            <span class="__info">
-                                                {{ user.username }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data"> {{ user.gender }} </h5>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data"> {{ user.phone }} </h5>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data "> {{ user.role }} </h5>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data"> {{ user.birthday | date:'dd/MM/yyyy' }} </h5>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data"> {{ user.createdAt | date:'dd/MM/yyyy' }} </h5>
-                                        </td>
-                                        <td>
-                                            <div class="__buttons">
-                                                <button type="button" class="btn btn-outline-success">
-                                                    <fa-icon icon='user-edit'></fa-icon> Editar
-                                                </button>
-                                                <button type="button" class="btn btn-outline-danger">
-                                                    <fa-icon icon='user-times'></fa-icon> Remover
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-floating" (click)="addUser()">
+                <fa-icon icon='user-plus' size='2x'></fa-icon>
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="row-section">
+    <div class="container">
+        <div class="col-md-10 offset-md-1 row-block">
+            <ul id="sortable">
+                <li *ngFor="let user of users; let num = index">
+                    <div class="media">
+                        <div class="media-left align-self-center">
+                            <img class="rounded-circle" src="https://randomuser.me/api/portraits/women/50.jpg">
+                        </div>
+                        <div class="media-body">
+                            <h4> {{ user.name |uppercase }} {{ user.family_name | uppercase }} </h4>
+                            <p>
+                                {{ user.role }}
+                            </p>
+
+                        </div>
+                        <div class="media-right align-self-center btn-actions">
+                            <fa-icon icon="user-times" class="text-warning"></fa-icon>
+                            <fa-icon icon="user-edit" class="text-info"></fa-icon>
                         </div>
                     </div>
-                    <div *ngIf="noResults">
-                        <no-result></no-result>
-                    </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

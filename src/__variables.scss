@@ -5,13 +5,8 @@
 .page-container {
     background: #f2f2f2;
     padding-left: 150px;
-}
-
-@media (max-width: 991px) {
-    .page-container {
-        position: relative;
-        padding-left: 0;
-    }
+    height: 100%;
+    min-height: 90vh;
 }
 
 .header-desktop {
@@ -24,13 +19,6 @@
     left: 150px;
 }
 
-@media (max-width: 991px) {
-    .header-desktop {
-        left: 0;
-        position: relative;
-    }
-}
-
 .header-desktop .section__content {
     top: 50%;
     -webkit-transform: translateY(-50%);
@@ -40,8 +28,20 @@
     transform: translateY(-50%);
 }
 
+@media (max-width: 991px) {
+    .page-container {
+        position: relative;
+        padding-left: 0;
+    }
+}
 
 
+@media (max-width: 991px) {
+    .header-desktop {
+        left: 0;
+        position: relative;
+    }
+}
 
 
 
@@ -104,8 +104,6 @@
 /* Novos Estilos */
 
 .table-responsive {
-    padding-right: 1px;
-
     .table-striped {
         tbody tr:nth-of-type(odd) {
             background-color: #fff;

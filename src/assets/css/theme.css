@@ -2049,8 +2049,8 @@ section {
 .navbar-sidebar2 .navbar__list li .arrow {
     position: absolute;
     right: 15px;
-    top: 0;
     text-align: center;
+    top: 0;
     vertical-align: middle;
     height: 63px;
     width: 63px;
