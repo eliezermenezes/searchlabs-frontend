@@ -5,11 +5,6 @@ import { UtilsService } from '../shared/services/utils.service';
 
 import { User } from '../shared/models/user.model';
 
-import {faUserEdit, faUserTimes, faUserPlus} from '@fortawesome/free-solid-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
-
-library.add(faUserEdit, faUserTimes, faUserPlus);
-
 @Component({
     selector: 'app-user',
     templateUrl: './user.component.html',

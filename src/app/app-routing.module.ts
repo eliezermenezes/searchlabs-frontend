@@ -3,10 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OccupationMapComponent } from './occupation-map/occupation-map.component';
-import { LoginComponent } from './login/login.component';
+import { SigninComponent } from './signin/signin.component';
 
 const appRoutes: Routes = [
-    { path: '', component: LoginComponent },
+    { path: '',  redirectTo: 'login', pathMatch: 'full' },
+    { path: 'login', component: SigninComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'occupation_map', component: OccupationMapComponent }
 ];

@@ -1,0 +1,48 @@
+<section class="statistic">
+    <div class="container">
+        <div *ngIf="noResults; then noresults; else results"></div>
+        
+        <ng-template #noresults>
+            <no-result></no-result>
+        </ng-template>
+
+        <ng-template #results>
+            <div class="table-responsive">
+                <table class="table table-borderless table-data">
+                    <thead>
+                        <tr>
+                            <th>Laboratório</th>
+                            <th>Turma</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let reservation of reservations; let num = index">
+                            <td> {{ reservation.solicitation.laboratory.name }} </td>
+                            <td> {{ reservation.solicitation.class.name }} </td>
+                            <td [ngSwitch]="reservation.solicitation.repeate">
+
+                                <ng-template [ngSwitchCase]="'yes'">
+                                    {{ reservation.solicitation.start_date | date:'dd/MM/yyyy' }} à
+                                    {{ reservation.solicitation.end_date | date:'dd/MM/yyyy' }}
+                                </ng-template>
+                                <ng-template [ngSwitchCase]="'no'">
+                                    {{ reservation.solicitation.start_date | date:'dd/MM/yyyy' }}
+                                </ng-template>
+
+                            </td>
+                            <td> {{ reservation.solicitation.start_hour }} </td>
+                            <td class="buttons_actions">
+                                <fa-icon icon="edit"></fa-icon>
+                                <fa-icon icon="times"></fa-icon>
+                                <fa-icon icon="ban"></fa-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ng-template>
+    </div>
+</section>

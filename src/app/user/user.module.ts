@@ -6,11 +6,6 @@ import { SharedModule } from './../shared/shared.module';
 
 import { UserComponent } from './user.component';
 
-import { faUserEdit, faUserTimes, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
-
-library.add(faUserEdit, faUserTimes, faUserPlus);
-
 @NgModule({
     imports: [
         CommonModule,

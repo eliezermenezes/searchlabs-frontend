@@ -1,0 +1,50 @@
+<section class="statistic">
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-floating" (click)="addUser()">
+                <fa-icon icon="plus" size="2x"></fa-icon>
+            </button>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div *ngIf="noResults; then noresults; else results"></div>
+
+    <ng-template #noresults>
+        <no-result></no-result>
+    </ng-template>
+
+    <ng-template #results>
+        <div class="table-responsive">
+            <table class="table table-borderless table-data">
+                <thead>
+                    <tr>
+                        <th>Laboratório</th>
+                        <th>Turma</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Situação</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let solicitation of solicitations; let num = index">
+                        <td> {{ solicitation.laboratory.name }} </td>
+                        <td> {{ solicitation.class.name }} </td>
+                        <td> {{ solicitation.start_date }} </td>
+                        <td> {{ solicitation.start_hour }} </td>
+                        <td> {{ solicitation.situation }} </td>
+                        <td class="buttons_actions">
+
+                            <fa-icon icon="edit"></fa-icon>
+                            <fa-icon icon="times"></fa-icon>
+                            <fa-icon icon="ban"></fa-icon>
+                            <fa-icon icon="check-double"></fa-icon>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-template>
+</div>

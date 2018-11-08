@@ -8,7 +8,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap';
 
+// Sign-in
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider } from "angularx-social-login";
+
+// Modules
 import { UserModule } from './user/user.module';
 import { LaboratoryModule } from './laboratory/laboratory.module';
 import { SolicitationModule } from './solicitation/solicitation.module';
@@ -45,10 +52,21 @@ library.add(
     faMapMarkedAlt,
     faBell,
     faCalendarAlt
-    );
+);
 
 import * as $ from 'jquery';
-import { LoginComponent } from './login/login.component';
+import { SigninComponent } from './signin/signin.component';
+
+const config = new AuthServiceConfig([
+    {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider('700230342978-uai9re9k768n2fdalf19qivqvgl3fmd3.apps.googleusercontent.com')
+    }
+]);
+
+export function provideConfig() {
+    return config;
+}
 
 @NgModule({
     declarations: [
@@ -59,7 +77,7 @@ import { LoginComponent } from './login/login.component';
         NavbarComponent,
         FooterComponent,
         OccupationMapComponent,
-        LoginComponent
+        SigninComponent
     ],
     imports: [
         BrowserModule,
@@ -72,14 +90,23 @@ import { LoginComponent } from './login/login.component';
         ToastrModule.forRoot({
             preventDuplicates: false,
             progressBar: true,
-            progressAnimation: 'increasing'
+            progressAnimation: 'increasing',
+            timeOut: 2000
         }),
+        ModalModule.forRoot(),
+        ReactiveFormsModule,
+        SocialLoginModule,
         UserModule,
         LaboratoryModule,
         SolicitationModule,
         ReservationModule
     ],
-    providers: [],
+    providers: [
+        {
+            provide: AuthServiceConfig,
+            useFactory: provideConfig
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

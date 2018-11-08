@@ -17,4 +17,20 @@ export class LaboratoryService {
     public async list() {
         return await this.http.get<Laboratory[]>(this.urlBase).toPromise();
     }
+
+    public async create(laboratory: Laboratory) {
+        return await this.http.post<Laboratory>(`${this.urlBase}/add`, laboratory).toPromise();
+    }
+
+    public async update(id: number, laboratory: Laboratory) {
+        return await this.http.patch<Laboratory>(`${this.urlBase}/${id}`, laboratory).toPromise();
+    }
+
+    public async delete(id: number) {
+        return await this.http.delete<Laboratory>(`${this.urlBase}/${id}/delete`).toPromise();
+    }
+
+    public async getById(id: number) {
+        return await this.http.get<Laboratory>(`${this.urlBase}/${id}`).toPromise();
+    }
 }

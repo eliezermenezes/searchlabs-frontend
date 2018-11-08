@@ -8,29 +8,40 @@
     </div>
 </section>
 
-<section class="row-section">
-    <div class="container">
-        <div class="col-md-10 offset-md-1 row-block">
-            <ul id="sortable">
-                <li *ngFor="let user of users; let num = index">
-                    <div class="media">
-                        <div class="media-left align-self-center">
-                            <img class="rounded-circle" src="https://randomuser.me/api/portraits/women/50.jpg">
-                        </div>
-                        <div class="media-body">
-                            <h4> {{ user.name |uppercase }} {{ user.family_name | uppercase }} </h4>
-                            <p>
-                                {{ user.role }}
-                            </p>
+<div class="container">
+    <div *ngIf="noResults; then noresults; else results"></div>
 
-                        </div>
-                        <div class="media-right align-self-center btn-actions">
-                            <fa-icon icon="user-times" class="text-warning"></fa-icon>
-                            <fa-icon icon="user-edit" class="text-info"></fa-icon>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+    <ng-template #noresults>
+        <no-result></no-result>
+    </ng-template>
+
+    <ng-template #results>
+        <div class="table-responsive">
+            <table class="table table-borderless table-data">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Username</th>
+                        <th>Perfil</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users; let num = index">
+                        <td> {{ user.name }} {{ user.family_name }} </td>
+                        <td> {{ user.username }} </td>
+                        <td> {{ user.role }} </td>
+                        <td> {{ user.status }} </td>
+                        <td class="buttons_actions">
+
+                            <fa-icon icon="user-edit"></fa-icon>
+                            <fa-icon icon="user-times"></fa-icon>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-</section>
+    </ng-template>
+</div>
