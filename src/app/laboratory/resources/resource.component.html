@@ -2,7 +2,7 @@
     <div class="container">
         <div class="col-md-8 offset-md-2">
             <div *ngIf="laboratory">
-                <app-resource-form [laboratory]="laboratory.id" (feedBackSon)="refleshResources($event)"></app-resource-form>
+                <app-resource-form [laboratory]="laboratory" [resourceEdit]="resource" (feedBackSon)="refleshResources($event)"></app-resource-form>
             </div>
 
             <div *ngIf="noResults; then noresults; else results"></div>
@@ -30,7 +30,7 @@
                                     <button type="button" class="btn btn-remove" (click)="delete(resource)">
                                         <fa-icon icon="trash"></fa-icon>
                                     </button>
-                                    <button type="button" class="btn btn-edit" (click)="goEdit(laboratory)">
+                                    <button type="button" class="btn btn-edit" (click)="edit(resource)">
                                         <fa-icon icon="edit"></fa-icon>
                                     </button>
                                 </td>

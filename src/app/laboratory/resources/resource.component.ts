@@ -7,6 +7,8 @@ import { Laboratory } from 'src/app/shared/models/laboratory.model';
 import { Subscription } from 'rxjs';
 import { Resource } from 'src/app/shared/models/resource.model';
 import { ResourceService } from './resource.service';
+import { EventsService } from 'src/app/shared/services/event.service';
+import { Events } from 'src/app/shared/components/events/events';
 
 @Component({
     selector: 'app-resources',
@@ -27,7 +29,8 @@ export class ResourceComponent implements OnInit, OnDestroy {
         private resourceService: ResourceService,
         private toastr: ToastrService,
         private router: Router,
-        private routerActive: ActivatedRoute
+        private routerActive: ActivatedRoute,
+        private events: EventsService
     ) { }
 
     async ngOnInit() {
@@ -71,7 +74,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
     }
 
     public async refleshResources(feedback: any) {
-        if (feedback === 'REFRESH-RESOURCES') {
+        if (feedback === Events.prototype.resourceREFRESH) {
             await this.getResources();
             if (this.resources.length > 0) {
                 this.noResults = false;
@@ -93,6 +96,10 @@ export class ResourceComponent implements OnInit, OnDestroy {
             this.toastr.error("Erro ao processar a requisição", "Erro");
             console.log(e);
         }
+    }
+
+    public edit(resource: Resource) {
+        this.events.broadcast(Events.prototype.resourceEDIT, resource);
     }
 
     ngOnDestroy() {

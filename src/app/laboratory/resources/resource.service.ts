@@ -18,6 +18,10 @@ export class ResourceService {
         return await this.http.get<Resource[]>(`${this.urlBase}/by/laboratory/${laboratory}`).toPromise();
     }
 
+    public async getById(id: number) {
+        return await this.http.get<Resource>(`${this.urlBase}/${id}`).toPromise();
+    }
+
     public async create(resource: Resource) {
         return await this.http.post<Resource>(`${this.urlBase}/add`, resource).toPromise();
     }

@@ -10,7 +10,7 @@ export class UtilsService {
 
     public typeEvent: Events = new Events();
 
-    constructor(private events: EventsService) {}
+    constructor(private events: EventsService) { }
 
     public eventAlterHeader(title: string) {
         this.events.broadcast(this.typeEvent.ALTER_TITLE_HEADER, title);

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <strong class="card-title mb-3"> Adicionar Recursos </strong>
+        <strong class="card-title mb-3"> {{ isFormEdit ? 'Editar recurso' : 'Cadastrar recurso' }} </strong>
     </div>
     <div class="card-body">
         <div class="mx-auto d-block">
@@ -16,9 +16,9 @@
                         <input type="number" class="form-control" id="quantity" formControlName="quantity">
                     </div>
                 </div>
-                <div class="text-right">
-                    <button type="submit" class="btn btn-outline-primary" [disabled]="!formulario.valid"> Adicionar
-                    </button>
+                <div class="buttons-actions">
+                    <button class="btn btn-outline-danger" *ngIf="isFormEdit" (click)="rollbackResources()"> Cancelar </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid"> {{ isFormEdit ? 'Salvar' : 'Cadastrar' }} </button>
                 </div>
             </form>
         </div>

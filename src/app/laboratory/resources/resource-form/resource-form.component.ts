@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Resource } from 'src/app/shared/models/resource.model';
-import { UtilsService } from 'src/app/shared/services/utils.service';
 import { ToastrService } from 'ngx-toastr';
 import { EventsService } from 'src/app/shared/services/event.service';
 import { ResourceService } from './../resource.service';
+import { Laboratory } from 'src/app/shared/models/laboratory.model';
+import { Events } from 'src/app/shared/components/events/events';
 
 @Component({
     selector: 'app-resource-form',
@@ -15,35 +15,45 @@ import { ResourceService } from './../resource.service';
 })
 export class ResourceFormComponent implements OnInit {
 
-    @Input() laboratory: number;
+    @Input() laboratory: Laboratory;
+    @Input() resourceEdit: Resource;
     @Output() feedBackSon = new EventEmitter();
 
+    public isFormEdit: boolean = false;
     public formulario: FormGroup;
     public resource: Resource;
 
     constructor(
-        private utils: UtilsService,
         private formBuilder: FormBuilder,
         private resourceService: ResourceService,
         private toastr: ToastrService,
-        private router: Router,
-        private routerActive: ActivatedRoute,
-        private events: EventsService
-    ) { }
+        private events: EventsService,
+    ) {
+        this.events.on(Events.prototype.resourceEDIT, (resource: Resource) => {
+            this.resource = resource;
+            this.isFormEdit = !this.isFormEdit;
+            this.inicializeFormulario();
+        });
+    }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.resource = new Resource();
         this.inicializeFormulario();
     }
 
     public inicializeFormulario() {
         this.formulario = this.formBuilder.group({
-            laboratory_id: [this.laboratory],
+            laboratory_id: [null],
             description: [this.resource.description, Validators.required],
             quantity: [this.resource.quantity]
         });
     }
+
     public onSubmit() {
+
+        this.formulario.patchValue({
+            laboratory_id: this.laboratory.id
+        });
 
         if (!this.resource.id) {
             this.save();
@@ -57,7 +67,8 @@ export class ResourceFormComponent implements OnInit {
         try {
             const resourceCreated = await this.resourceService.create(this.formulario.value);
             if (resourceCreated) {
-                this.feedBackSon.emit('REFRESH-RESOURCES');
+                this.formulario.reset();
+                this.emitFeedbackForGetter();
 
                 this.toastr.success("Recurso adicionado", "Sucesso");
             } else {
@@ -70,9 +81,12 @@ export class ResourceFormComponent implements OnInit {
     }
 
     public async update() {
+
         try {
             const resourcedated = await this.resourceService.update(this.resource.id, this.formulario.value);
             if (resourcedated) {
+                this.rollbackResources();
+                this.emitFeedbackForGetter();
                 this.toastr.success("Recurso atualizado", "Sucesso");
             } else {
                 this.toastr.error("Recurso não atualizado", "Erro");
@@ -81,5 +95,15 @@ export class ResourceFormComponent implements OnInit {
             console.log(e);
             this.toastr.error("Recurso não atualizado", "Erro");
         }
+    }
+
+    private emitFeedbackForGetter() {
+        this.feedBackSon.emit(Events.prototype.resourceREFRESH);
+    }
+
+    public rollbackResources() {
+        this.isFormEdit = !this.isFormEdit;
+        this.resource = Object.assign(new Laboratory());
+        this.formulario.reset();
     }
 }

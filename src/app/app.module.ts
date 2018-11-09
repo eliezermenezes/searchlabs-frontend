@@ -20,6 +20,7 @@ import { UserModule } from './user/user.module';
 import { LaboratoryModule } from './laboratory/laboratory.module';
 import { SolicitationModule } from './solicitation/solicitation.module';
 import { ReservationModule } from './reservation/reservation.module';
+import { ClassModule } from './class/class.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -29,6 +30,8 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MenuComponent } from './layout/menu/menu.component';
 import { OccupationMapComponent } from './occupation-map/occupation-map.component';
+import { SigninComponent } from './signin/signin.component';
+import * as $ from 'jquery';
 
 import {
     faTachometerAlt,
@@ -38,7 +41,8 @@ import {
     faSitemap,
     faMapMarkedAlt,
     faBell,
-    faCalendarAlt
+    faCalendarAlt,
+    faLayerGroup
 } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -51,11 +55,9 @@ library.add(
     faSitemap,
     faMapMarkedAlt,
     faBell,
-    faCalendarAlt
+    faCalendarAlt,
+    faLayerGroup
 );
-
-import * as $ from 'jquery';
-import { SigninComponent } from './signin/signin.component';
 
 const config = new AuthServiceConfig([
     {
@@ -99,7 +101,8 @@ export function provideConfig() {
         UserModule,
         LaboratoryModule,
         SolicitationModule,
-        ReservationModule
+        ReservationModule,
+        ClassModule
     ],
     providers: [
         {
