@@ -1,0 +1,32 @@
+[
+    {
+        "identify": 1,
+        "value": "Monday",
+        "description": "Segunda-feira"
+    },
+    {
+        "identify": 2,
+        "value": "Tuesday",
+        "description": "Terça-feira"
+    },
+    {
+        "identify": 3,
+        "value": "Wednesday",
+        "description": "Quarta-feira"
+    },
+    {
+        "identify": 4,
+        "value": "Thursday",
+        "description": "Qunita-feira"
+    },
+    {
+        "identify": 5,
+        "value": "Friday",
+        "description": "Sexta-feira"
+    },
+    {
+        "identify": 6,
+        "value": "Saturday",
+        "description": "Sábado"
+    }
+]

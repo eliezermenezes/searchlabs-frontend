@@ -18,6 +18,10 @@ export class LaboratoryService {
         return await this.http.get<Laboratory[]>(this.urlBase).toPromise();
     }
 
+    public async getOnlyLaboratories() {
+        return await this.http.get<Laboratory[]>(`${this.urlBase}/list`).toPromise();
+    }
+
     public async create(laboratory: Laboratory) {
         return await this.http.post<Laboratory>(`${this.urlBase}/add`, laboratory).toPromise();
     }

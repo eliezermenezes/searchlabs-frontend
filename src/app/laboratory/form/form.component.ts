@@ -10,7 +10,8 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss']
+    styleUrls: ['./form.component.scss'],
+    providers: [LaboratoryService]
 })
 export class FormComponent implements OnInit, OnDestroy {
 

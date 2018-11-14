@@ -36,11 +36,12 @@
                         <td> {{ solicitation.start_hour }} </td>
                         <td> {{ solicitation.situation }} </td>
                         <td class="buttons_actions">
-
-                            <fa-icon icon="edit"></fa-icon>
-                            <fa-icon icon="times"></fa-icon>
-                            <fa-icon icon="ban"></fa-icon>
-                            <fa-icon icon="check-double"></fa-icon>
+                            <button type="button" class="btn btn-remove" (click)="confirmDelete(solicitation)">
+                                <fa-icon icon="trash"></fa-icon>
+                            </button>
+                            <button type="button" class="btn btn-edit" (click)="goEdit(solicitation)">
+                                <fa-icon icon="edit"></fa-icon>
+                            </button>
                         </td>
                     </tr>
                 </tbody>

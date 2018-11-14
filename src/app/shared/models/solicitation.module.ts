@@ -1,3 +1,5 @@
+import { Laboratory } from './laboratory.model';
+import { Class } from './class.model';
 
 export class Solicitation {
     public id: number;
@@ -12,6 +14,6 @@ export class Solicitation {
     public answer_date?: Date;
     public answer_description?: string;
     public status: string;
-    public laboratory_id: number;
-    public class_id: number;
+    public laboratory: Laboratory;
+    public class: Class;
 }

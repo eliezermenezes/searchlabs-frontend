@@ -20,6 +20,7 @@ import {
     faAsterisk,
     faLaptopCode,
     faTrash,
+    faCalendarAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -35,7 +36,8 @@ library.add(
     faPlus,
     faAsterisk,
     faLaptopCode,
-    faTrash
+    faTrash,
+    faCalendarAlt
 );
 
 @NgModule({

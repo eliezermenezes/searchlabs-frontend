@@ -1,49 +1,145 @@
 <section class="statistic">
     <div class="container">
         <div class="row">
-
-
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30">
-                <div class="tour-booking-form">
-                    <form>
+                <div class="tour-booking-form" *ngIf="!loading">
+
+                    <pre>
+                        {{ formulario.value | json }}
+                    </pre>
+
+                    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
                         <div class="row">
-                            
-                            
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('laboratory')">
+                                        <label class="control-label" for="laboratory"> Laboratório </label>
+
+                                        <select id="laboratory" class="custom-select form-select" formControlName="laboratory"
+                                            [compareWith]="compareLaboratories">
+                                            <option *ngFor="let laboratory of laboratories" [ngValue]="laboratory">
+                                                {{laboratory.name }}
+                                            </option>
+                                        </select>
+
+                                        <error-required [showError]="verifyFieldTouched('laboratory')" messageError="Selecione um laboratório."></error-required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('class')">
+                                        <label class="control-label" for="class"> Turma </label>
+
+                                        <select id="class" class="custom-select form-select" formControlName="class"
+                                            [compareWith]="compareClasses">
+                                            <option *ngFor="let class of classes" [ngValue]="class">
+                                                {{ class.name }}
+                                            </option>
+                                        </select>
+
+                                        <error-required [showError]="verifyFieldTouched('class')" messageError="Selecione uma turma."></error-required>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt30">
-                                <h4 class="tour-form-title">Your Travel Plan Detail</h4>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="name">Name</label>
-                                    <input id="name" type="text" placeholder="First Name" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="email"> Email</label>
-                                    <input id="email" type="text" placeholder="xxxx@xxxx.xxx" class="form-control"
-                                        required>
-                                </div>
+                                <h4 class="tour-form-title"> Data e Hora </h4>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="phone"> Phone</label>
-                                    <input id="phone" type="text" placeholder="(222) 222-2222" class="form-control"
-                                        required>
+                                    <div [ngClass]="applyStyles('start_date')">
+                                        <label class="control-label" for="start_date"> Data </label>
+
+                                        <div class="input-group">
+                                            <input id="start_date" type="text" placeholder="yyyy-mm-dd" class="form-control"
+                                                formControlName="start_date" ngbDatepicker #d1="ngbDatepicker">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text calendar" (click)="d1.toggle()">
+                                                    <fa-icon icon="calendar-alt"></fa-icon>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <error-required [showError]="verifyFieldTouched('start_date')" messageError="Preenchimento obrigatório."></error-required>
+                                        <invalid-date [showError]="verifyFieldDateFormat('start_date')" messageError="Data inválida."></invalid-date>
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="country">Country</label>
-                                    <input id="country" type="text" placeholder="India" class="form-control" required>
+                                    <div [ngClass]="applyStyles('schedule')">
+                                        <label class="control-label" for="schedule">Horário</label>
+
+                                        <select id="schedule" class="custom-select form-select" formControlName="schedule"
+                                            [compareWith]="compareSchedules">
+                                            <option *ngFor="let schedule of schedules" [ngValue]="schedule"> de <b>{{
+                                                    schedule.start }}</b> às {{ schedule.end }} </option>
+                                        </select>
+
+                                        <error-required [showError]="verifyFieldTouched('schedule')" messageError="Preenchimento obrigatório."></error-required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                                <div class="form-group has-error">
-                                    <label class="control-label" for="city">City</label>
-                                    <input id="city" type="text" placeholder="Ahmedabad" class="form-control" required>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" class="custom-control-input" id="repeate" formControlName="repeate"
+                                        (change)="setDaysWeek()">
+                                    <label class="custom-control-label" for="repeate"> Repetir o horário em outros dias
+                                        da semana </label>
                                 </div>
                             </div>
+
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="formulario.value.repeate">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <hr>
+                                            <div class="card" [ngClass]="{'required-checkbox': verifyFieldTouched('days_week')}">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-2" *ngFor="let item of formulario.get('days_week').controls; let i = index">
+                                                            <div class="custom-control custom-checkbox mb-3"
+                                                                formArrayName="days_week">
+                                                                <input type="checkbox" class="custom-control-input" id="{{i}}"
+                                                                    [formControlName]="i">
+                                                                <label class="custom-control-label" for="{{i}}">
+                                                                    {{ days_week[i].description }}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <error-required [showError]="verifyFieldTouched('days_week')" messageError="Selecione uma opção."></error-required>
+                                            <hr>
+
+                                        </div>
+                                        <div class="col-xl-3 col-md-12">
+                                            <div class="form-group">
+                                                <div [ngClass]="applyStyles('end_date')">
+                                                    <label class="control-label" for="end_date"> Data Final</label>
+
+                                                    <div class="input-group">
+                                                        <input id="end_date" type="text" placeholder="yyyy-mm-dd" class="form-control"
+                                                            formControlName="end_date" ngbDatepicker #d2="ngbDatepicker">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text calendar" (click)="d2.toggle()">
+                                                                <fa-icon icon="calendar-alt"></fa-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <error-required [showError]="verifyFieldTouched('end_date')"
+                                                        messageError="Preenchimento obrigatório."></error-required>
+                                                    <invalid-date [showError]="verifyFieldDateFormat('end_date')"
+                                                        messageError="Data inválida."></invalid-date>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label class="control-label" for="textarea">Describe Your Travel Requirements</label>
@@ -51,12 +147,12 @@
                                 </div>
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <button type="submit" name="singlebutton" class="btn btn-primary">send Enquiry</button>
+                                <button type="submit" class="btn btn-primary"> Salvar
+                                </button>
                             </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

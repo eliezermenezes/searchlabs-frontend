@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 // Sign-in
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
@@ -31,7 +33,9 @@ import { HeaderComponent } from './layout/header/header.component';
 import { MenuComponent } from './layout/menu/menu.component';
 import { OccupationMapComponent } from './occupation-map/occupation-map.component';
 import { SigninComponent } from './signin/signin.component';
+
 import * as $ from 'jquery';
+import * as moment from 'moment';
 
 import {
     faTachometerAlt,
@@ -96,13 +100,16 @@ export function provideConfig() {
             timeOut: 2000
         }),
         ModalModule.forRoot(),
+
         ReactiveFormsModule,
         SocialLoginModule,
         UserModule,
         LaboratoryModule,
         SolicitationModule,
         ReservationModule,
-        ClassModule
+        ClassModule,
+
+        NgbModule
     ],
     providers: [
         {

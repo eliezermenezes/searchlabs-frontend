@@ -1,3 +1,36 @@
-<p>
-  form works!
-</p>
+<section class="statistic">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-10 col-lg-10 offset-lg-1 col-md-12 col-sm-12 col-12 mb30">
+                <div class="tour-booking-form">
+                    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="name"> Nome: <field-required></field-required></label>
+                                    <input id="name" type="text" placeholder="Nome" class="form-control" formControlName="name">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="code"> Código: </label>
+                                    <input id="code" type="text" placeholder="Código" class="form-control" formControlName="code">
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="institution"> Instituição: </label>
+                                    <input id="institution" type="text" placeholder="Instituição" class="form-control" formControlName="institution">
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid"> Salvar </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -2089,6 +2089,8 @@ section {
 .navbar-sidebar2 .navbar__list li.active > a {
     color: rgb(37, 98, 143);
     background-color: #e1e6ea;
+    font-weight: 500;
+    border-right: 2px solid rgb(37, 98, 143);
 }
 
 .navbar-sidebar2 .navbar__sub-list {

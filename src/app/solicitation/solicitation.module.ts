@@ -6,13 +6,17 @@ import { SharedModule } from '../shared/shared.module';
 
 import { SolicitationComponent } from './solicitation.component';
 import { FormComponent } from './form/form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     FontAwesomeModule,
+    ReactiveFormsModule,
     SolicitationRoutingModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ],
   declarations: [SolicitationComponent, FormComponent]
 })

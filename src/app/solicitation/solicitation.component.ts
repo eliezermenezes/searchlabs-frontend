@@ -42,5 +42,7 @@ export class SolicitationComponent implements OnInit {
             console.log(error);
         }
     }
-
+    public goEdit(solicitation: Solicitation) {
+        this.router.navigate(['/solicitations/' + solicitation.id + '/edit']);
+    }
 }

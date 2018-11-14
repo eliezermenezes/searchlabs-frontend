@@ -1,3 +1,49 @@
-<p>
-  class works!
-</p>
+<section class="statistic">
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-floating" [routerLink]="['/classes/add']">
+                <fa-icon icon='plus' size='2x'></fa-icon>
+            </button>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div *ngIf="noResults; then noresults; else results"></div>
+
+    <ng-template #noresults>
+        <no-result></no-result>
+    </ng-template>
+
+    <ng-template #results>
+        <div class="table-responsive">
+            <table class="table table-borderless table-data">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Código</th>
+                        <th>Instituição</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let class of classes; let num = index">
+                        <td> {{ class.name }} </td>
+                        <td> {{ class.code }} </td>
+                        <td> {{ class.institution }} </td>
+                        <td> {{ class.status }} </td>
+                        <td class="buttons_actions">
+                            <button type="button" class="btn btn-remove" (click)="confirmDelete(class)">
+                                <fa-icon icon="trash"></fa-icon>
+                            </button>
+                            <button type="button" class="btn btn-edit" (click)="goEdit(class)">
+                                <fa-icon icon="edit"></fa-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-template>
+</div>

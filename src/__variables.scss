@@ -131,7 +131,7 @@
         }
 
         .btn-remove {
-            color: #fa4251;
+            color: #f57c86;
         }
 
         .btn-edit {
@@ -145,6 +145,7 @@
 }
 
 .form-group {
+
     .control-label {
         font-size: 15px;
         text-transform: capitalize;
@@ -158,12 +159,11 @@
         height: 120px;
     }
     
-    .form-control {
+    .form-control, .form-select {
         border-radius: 8px;
         font-size: 14px;
         font-weight: 500;
-        width: 100%;
-        height: 60px;
+        height: 55px;
         padding: 14px 18px;
         line-height: 1.42857143;
         border: 1px solid #dedbe3;
@@ -174,8 +174,18 @@
         box-shadow: inset 0 0px 0px rgba(0, 0, 0, .075);
         -webkit-appearance: none;
     }
+
+    .input-group {
+        .input-group-append {
+            height: 55px;
+        }
+
+        .calendar {
+            cursor: pointer;
+        }
+    }
     
-    .form-control:focus {
+    .form-control, .form-select:focus {
         color: #121113 !important;
         outline: 0;
         -webkit-box-shadow: none;
@@ -183,11 +193,27 @@
         border-color: #d6dadf;
     }
     
-    .has-error .form-control {
+    .has-error {
+        .control-label {
+            color: #a94442;
+            font-weight: 500;
+        }
+        .form-control, .form-select {
+            border-color: #a94442;
+        }
+    }
+
+    .card {
+        margin-bottom: 16px;
+    }
+    .card-body {
+        padding-bottom: 3px;
+    }
+
+    .required-checkbox {
         border-color: #a94442;
-        background-color: #f8f8f9;
-        box-shadow: none;
-    }    
+        color: #a94442;
+    }
 }
 
 form .buttons-actions {
