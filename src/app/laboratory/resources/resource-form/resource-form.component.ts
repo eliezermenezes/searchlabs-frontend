@@ -19,7 +19,7 @@ export class ResourceFormComponent implements OnInit {
     @Input() resourceEdit: Resource;
     @Output() feedBackSon = new EventEmitter();
 
-    public isFormEdit: boolean = false;
+    public isFormEdit: boolean;
     public formulario: FormGroup;
     public resource: Resource;
 
@@ -31,7 +31,7 @@ export class ResourceFormComponent implements OnInit {
     ) {
         this.events.on(Events.prototype.resourceEDIT, (resource: Resource) => {
             this.resource = resource;
-            this.isFormEdit = !this.isFormEdit;
+            this.isFormEdit = true;
             this.inicializeFormulario();
         });
     }

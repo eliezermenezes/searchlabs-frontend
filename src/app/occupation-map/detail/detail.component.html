@@ -1,0 +1,35 @@
+<div *ngIf="noResults; then noresults, else results"></div>
+
+<ng-template #noresults>
+    <no-result></no-result>
+</ng-template>
+
+<ng-template #results>
+    <section class="cd-timeline">
+        <div class="cd-timeline__container">
+            <div class="cd-timeline__block" *ngFor="let occupation of occupationMap">
+                <div class="cd-timeline__img cd-timeline__img--picture">
+                    <fa-icon class="icon" icon="calendar-alt"></fa-icon>
+                </div>
+
+                <div class="cd-timeline__content js-cd-content">
+                    <h2>
+                        <fa-icon icon="clock"></fa-icon>
+                        {{ occupation.value.hour.start }} - {{ occupation.value.hour.end }}
+                    </h2>
+                    <h3>
+                        <fa-icon icon="layer-group"></fa-icon>
+                        {{ occupation.class.name }}
+                    </h3>
+                    <p>
+                        <fa-icon icon="university"></fa-icon>
+                        {{ occupation.class.locale }}
+                    </p>
+                    <span class="cd-timeline__date">
+                        {{ occupation.value.date | date:'fullDate' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-template>

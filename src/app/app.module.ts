@@ -11,8 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 // Sign-in
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
@@ -23,6 +21,7 @@ import { LaboratoryModule } from './laboratory/laboratory.module';
 import { SolicitationModule } from './solicitation/solicitation.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { ClassModule } from './class/class.module';
+import { SharedModule } from './shared/shared.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -33,9 +32,9 @@ import { HeaderComponent } from './layout/header/header.component';
 import { MenuComponent } from './layout/menu/menu.component';
 import { OccupationMapComponent } from './occupation-map/occupation-map.component';
 import { SigninComponent } from './signin/signin.component';
+import { DetailComponent } from './occupation-map/detail/detail.component';
 
 import * as $ from 'jquery';
-import * as moment from 'moment';
 
 import {
     faTachometerAlt,
@@ -83,7 +82,8 @@ export function provideConfig() {
         NavbarComponent,
         FooterComponent,
         OccupationMapComponent,
-        SigninComponent
+        SigninComponent,
+        DetailComponent
     ],
     imports: [
         BrowserModule,
@@ -97,7 +97,8 @@ export function provideConfig() {
             preventDuplicates: false,
             progressBar: true,
             progressAnimation: 'increasing',
-            timeOut: 2000
+            timeOut: 2000,
+            positionClass: 'toast-bottom-center',
         }),
         ModalModule.forRoot(),
 
@@ -108,8 +109,8 @@ export function provideConfig() {
         SolicitationModule,
         ReservationModule,
         ClassModule,
-
-        NgbModule
+        SharedModule
+        //NgbModule
     ],
     providers: [
         {

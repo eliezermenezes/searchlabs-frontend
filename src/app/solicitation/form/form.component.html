@@ -3,11 +3,6 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30">
                 <div class="tour-booking-form" *ngIf="!loading">
-
-                    <pre>
-                        {{ formulario.value | json }}
-                    </pre>
-
                     <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
@@ -72,8 +67,9 @@
 
                                         <select id="schedule" class="custom-select form-select" formControlName="schedule"
                                             [compareWith]="compareSchedules">
-                                            <option *ngFor="let schedule of schedules" [ngValue]="schedule"> de <b>{{
-                                                    schedule.start }}</b> às {{ schedule.end }} </option>
+                                            <option *ngFor="let schedule of schedules" [ngValue]="schedule">
+                                                {{ schedule.start }} - {{ schedule.end }}
+                                            </option>
                                         </select>
 
                                         <error-required [showError]="verifyFieldTouched('schedule')" messageError="Preenchimento obrigatório."></error-required>
@@ -140,13 +136,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="col-xl-12 col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="textarea">Describe Your Travel Requirements</label>
-                                    <textarea class="form-control" id="textarea" name="textarea" rows="4" placeholder="Write Your Requirements"></textarea>
+                                    <label class="control-label" for="observation"> Observação </label>
+                                    <textarea class="form-control" id="observation" rows="3" placeholder="Digite alguma observação"
+                                        formControlName="observation"></textarea>
                                 </div>
                             </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="col-xl-12 col-md-12">
                                 <button type="submit" class="btn btn-primary"> Salvar
                                 </button>
                             </div>

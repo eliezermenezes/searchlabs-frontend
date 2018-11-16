@@ -1,0 +1,35 @@
+<section class="statistic">
+    <div class="container">
+
+        <div class="col-md-12">
+            <button class="btn btn-success btn-floating" (click)="goEdit()">
+                <fa-icon icon='pencil-alt' size='2x'></fa-icon>
+            </button>
+            <button class="btn btn-danger btn-floating-other" (click)="confirmDelete()">
+                <fa-icon icon='trash' size='2x'></fa-icon>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12 mb30">
+                <div class="au-card" *ngIf="laboratory">
+                    <div class="au-card-inner">
+                        <h5>
+                            <fa-icon icon="map-marked"></fa-icon> {{ laboratory.localization }}
+                        </h5>
+                        <h6>
+                            <span *ngIf="laboratory.situation == 'ok'" class="text-success">
+                                <fa-icon icon="check"></fa-icon> Regular
+                            </span>
+                            <span *ngIf="laboratory.situation !== 'ok'" class="text-info">
+                                <fa-icon icon="cogs"></fa-icon> Em manutenção
+                            </span>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12 mb30">
+                <app-resources></app-resources>
+            </div>
+        </div>
+    </div>
+</section>

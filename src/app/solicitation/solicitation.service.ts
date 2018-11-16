@@ -20,12 +20,12 @@ export class SolicitationService {
         return await this.http.get<Solicitation[]>(this.url_base).toPromise();
     }
 
-    public async create(classs: Solicitation) {
-        return await this.http.post<Solicitation>(`${this.url_base}/add`, classs).toPromise();
+    public async create(solicitation: Solicitation) {
+        return await this.http.post<Solicitation>(`${this.url_base}/register`, solicitation).toPromise();
     }
 
-    public async update(id: number, classs: Solicitation) {
-        return await this.http.patch<Solicitation>(`${this.url_base}/${id}`, classs).toPromise();
+    public async update(id: number, solicitation: Solicitation) {
+        return await this.http.patch<Solicitation>(`${this.url_base}/${id}`, solicitation).toPromise();
     }
 
     public async delete(id: number) {

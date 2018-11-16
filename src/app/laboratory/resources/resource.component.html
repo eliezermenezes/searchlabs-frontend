@@ -1,44 +1,38 @@
-<section class="statistic">
-    <div class="container">
-        <div class="col-md-8 offset-md-2">
-            <div *ngIf="laboratory">
-                <app-resource-form [laboratory]="laboratory" [resourceEdit]="resource" (feedBackSon)="refleshResources($event)"></app-resource-form>
-            </div>
+<div *ngIf="laboratory">
+    <app-resource-form [laboratory]="laboratory" [resourceEdit]="resource" (feedBackSon)="refleshResources($event)"></app-resource-form>
+</div>
 
-            <div *ngIf="noResults; then noresults; else results"></div>
+<div *ngIf="noResults; then noresults; else results"></div>
 
-            <ng-template #noresults>
-                <no-result></no-result>
-            </ng-template>
+<ng-template #noresults>
+    <no-result></no-result>
+</ng-template>
 
-            <ng-template #results>
+<ng-template #results>
 
-                <div class="table-responsive">
-                    <table class="table table-borderless table-data">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Quantidade</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let resource of resources; let num = index">
-                                <td> {{ resource.description }} </td>
-                                <td> {{ resource.quantity }} </td>
-                                <td class="buttons_actions">
-                                    <button type="button" class="btn btn-remove" (click)="delete(resource)">
-                                        <fa-icon icon="trash"></fa-icon>
-                                    </button>
-                                    <button type="button" class="btn btn-edit" (click)="edit(resource)">
-                                        <fa-icon icon="edit"></fa-icon>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </ng-template>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-borderless table-data">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Quantidade</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let resource of resources; let num = index">
+                    <td> {{ resource.description }} </td>
+                    <td> {{ resource.quantity }} </td>
+                    <td class="buttons_actions">
+                        <button type="button" class="btn btn-remove" (click)="delete(resource)">
+                            <fa-icon icon="trash"></fa-icon>
+                        </button>
+                        <button type="button" class="btn btn-edit" (click)="edit(resource)">
+                            <fa-icon icon="edit"></fa-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</section>
+</ng-template>

@@ -1,7 +1,7 @@
 <section class="statistic">
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-primary btn-floating" [routerLink]="['/solicitations/register']">
+            <button class="btn btn-success btn-floating" [routerLink]="['/solicitations/register']">
                 <fa-icon icon="plus" size="2x"></fa-icon>
             </button>
         </div>
@@ -16,6 +16,33 @@
     </ng-template>
 
     <ng-template #results>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-xl-4 col-md-12">
+                        <div class="form-group">
+                            <input type="text" placeholder="Todos os laboratórios" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-12">
+                        <div class="form-group">
+                            <input type="text" placeholder="Todas as turmas" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-12">
+                        <div class="form-group">
+                            <input type="text" placeholder="Abertos" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xl-1 col-md-12">
+                        <button class="btn btn-primary btn-search">
+                            <fa-icon icon="search"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-borderless table-data">
                 <thead>

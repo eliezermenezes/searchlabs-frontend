@@ -24,7 +24,6 @@ export class ResourceComponent implements OnInit, OnDestroy {
     public noResults: boolean;
 
     constructor(
-        private utils: UtilsService,
         private laboratoryService: LaboratoryService,
         private resourceService: ResourceService,
         private toastr: ToastrService,
@@ -50,7 +49,6 @@ export class ResourceComponent implements OnInit, OnDestroy {
         try {
             let laboratory = await this.laboratoryService.getById(id);
             if (laboratory) {
-                this.utils.eventAlterHeader('Recursos do ' + laboratory.name);
                 this.laboratory = laboratory;
                 this.getResources();
             }

@@ -17,4 +17,8 @@ export class ReservationService {
     public async list() {
         return await this.http.get<Reservation[]>(this.urlBase).toPromise();
     }
+
+    public async getByLaboratory(laboratory: number) {
+        return await this.http.get<Reservation[]>(`${this.urlBase}/by/laboratory/${laboratory}`).toPromise();
+    }
 }

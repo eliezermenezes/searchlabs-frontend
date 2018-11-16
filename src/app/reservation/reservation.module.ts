@@ -21,6 +21,19 @@ import {
     faLaptopCode,
     faTrash,
     faCalendarAlt,
+    faSearch,
+    faFilter,
+    faClock,
+    faUniversity,
+    faUser,
+    faLayerGroup,
+    faChevronCircleRight,
+    faChevronRight,
+    faCheck,
+    faSitemap,
+    faMapMarked,
+    faCogs,
+    faPencilAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -37,7 +50,21 @@ library.add(
     faAsterisk,
     faLaptopCode,
     faTrash,
-    faCalendarAlt
+    faCalendarAlt,
+    faSearch,
+    faFilter,
+    faCalendarAlt,
+    faClock,
+    faUniversity,
+    faUser,
+    faLayerGroup,
+    faChevronCircleRight,
+    faChevronRight,
+    faCheck,
+    faSitemap,
+    faMapMarked,
+    faCogs,
+    faPencilAlt
 );
 
 @NgModule({

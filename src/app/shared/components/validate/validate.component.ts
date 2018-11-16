@@ -58,6 +58,10 @@ export class ValidateComponent implements OnInit {
         return new Date(newDate);
     };
 
+    protected formattedDatePersiste(date: Date) {
+        return moment(date).format('YYYY-MM-DD');
+    }
+
     protected required() {
         return Validators.required;
     };

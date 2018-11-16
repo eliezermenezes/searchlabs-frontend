@@ -14,7 +14,6 @@ import { Schedule } from './../../shared/interface/schedule';
 import { DaysWeek } from './../../shared/interface/days_week';
 import { Class } from 'src/app/shared/models/class.model';
 
-
 @Component({
     selector: 'app-form',
     templateUrl: './form.component.html',
@@ -77,9 +76,9 @@ export class FormComponent extends BaseFormComponent implements OnInit {
         }
     }
 
-    public async save() {
+    public async save(valuesSubmit: Solicitation) {
         try {
-            const solicitationCreated = await this.solicitationService.create(this.formulario.value);
+            const solicitationCreated = await this.solicitationService.create(valuesSubmit);
             if (solicitationCreated) {
                 this.router.navigate(['solicitations']);
                 this.toastr.success("Solicitação registrada", "Sucesso");
@@ -92,7 +91,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
         }
     }
 
-    public async update() {
+    public async update(valuesSubmit: Solicitation) {
         try {
             const solicitationUpdated = await this.solicitationService.update(this.solicitation.id, this.formulario.value);
             if (solicitationUpdated) {
@@ -107,42 +106,79 @@ export class FormComponent extends BaseFormComponent implements OnInit {
         }
     }
 
-    public submit() {
+    public async  submit() {
+
         let valuesSubmit = Object.assign({}, this.formulario.value);
+        let date = {
+            start: this.formattedDatePersiste(valuesSubmit.start_date),
+            end: this.formattedDatePersiste(valuesSubmit.start_date),
+        };
+
+        if (valuesSubmit.repeate) {
+            date.end = this.formattedDatePersiste(valuesSubmit.end_date);
+
+            valuesSubmit = Object.assign(valuesSubmit, {
+                days_week: valuesSubmit.days_week
+                    .map((value, index) => value ? this.days_week_value[index] : null)
+                    .filter(value => value !== null)
+            });
+        }
+
+        await this.prepareSubmit(valuesSubmit, date);
+    }
+
+    private async prepareSubmit(valuesSubmit: any, date: any) {
+        
         valuesSubmit = Object.assign(valuesSubmit, {
-            days_week: valuesSubmit.days_week
-                .map((value, index) => value ? this.days_week_value[index] : null)
-                .filter(value => value !== null)
+            date: date,
+            repeate: valuesSubmit.repeate ? 'yes' : 'no'
         });
 
-        console.log(valuesSubmit);
+        const days_week = valuesSubmit.days_week.join();
+        valuesSubmit.days_week = days_week;
+
+        delete valuesSubmit.start_date;
+        delete valuesSubmit.end_date;
+
+        if (valuesSubmit.repeate === 'no') {
+            delete valuesSubmit.days_week;
+        }
+
+        if (this.isEditMode) {
+            await this.update(valuesSubmit);
+        } else {
+            await this.save(valuesSubmit);
+        }
     }
 
     public async defineDataFormGroup(solicitation?: Solicitation) {
         let repeate = solicitation ? solicitation.repeate === 'yes' : false;
 
         let dataForm = {
-            laboratory : solicitation ? solicitation.laboratory : null,
-            class      : solicitation ? solicitation.class : null,
-            startDate  : solicitation ? this.formattedDate(solicitation.start_date) : this.formattedDate(),
-            endDate    : solicitation ? this.formattedDate(solicitation.end_date) : null,
-            repeate    : solicitation ? solicitation.repeate === 'yes' : false,
-            days_week  : solicitation ? this.buildCheckboxsDaysWeek(repeate) : this.buildCheckboxsDaysWeek(),
-            schedule   : solicitation ? { start: solicitation.start_hour, end: solicitation.end_hour } : null
+            laboratory: solicitation ? solicitation.laboratory : null,
+            class: solicitation ? solicitation.class : null,
+            start_date: solicitation ? this.formattedDate(solicitation.start_date) : this.formattedDate(),
+            end_date: solicitation ? this.formattedDate(solicitation.end_date) : null,
+            repeate: solicitation ? solicitation.repeate === 'yes' : false,
+            days_week: solicitation ? this.buildCheckboxsDaysWeek(repeate) : this.buildCheckboxsDaysWeek(),
+            schedule: solicitation ? { start: solicitation.start_hour, end: solicitation.end_hour } : null,
+            observation: solicitation ? solicitation.observation : null
         };
 
         await this.createFormGroup(dataForm);
     }
 
     private async createFormGroup(dataForm: any) {
+
         this.formulario = await this.formBuilder.group({
-            laboratory  : [dataForm.laboratory, this.required()],
-            class       : [dataForm.class, this.required()],
-            start_date  : [dataForm.startDate, this.required()],
-            end_date    : [dataForm.endDate],
-            repeate     : [dataForm.repeate],
-            days_week   : dataForm.days_week,
-            schedule    : [dataForm.schedule, this.required()]
+            laboratory: [dataForm.laboratory, this.required()],
+            class: [dataForm.class, this.required()],
+            start_date: [dataForm.start_date, this.required()],
+            end_date: [dataForm.end_date],
+            repeate: [dataForm.repeate],
+            days_week: dataForm.days_week,
+            schedule: [dataForm.schedule, this.required()],
+            observation: dataForm.observation
         });
     }
 
@@ -246,7 +282,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
         return (classOne && classTwo) ? (classOne.id === classTwo.id && classOne.name === classTwo.name) : classOne === classTwo;
     }
 
-    public compareSchedules(obj1: Schedule , obj2: Schedule) {
+    public compareSchedules(obj1: Schedule, obj2: Schedule) {
         return (obj1 && obj2) ? (obj1.start === obj2.start && obj1.end === obj2.end) : obj1 === obj2;
     }
 }

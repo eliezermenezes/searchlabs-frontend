@@ -9,6 +9,7 @@ import { LaboratoryComponent } from './laboratory.component';
 import { FormComponent } from './form/form.component';
 import { ResourceComponent } from './resources/resource.component';
 import { ResourceFormComponent } from './resources/resource-form/resource-form.component';
+import { DetailComponent } from './detail/detail.component';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { ResourceFormComponent } from './resources/resource-form/resource-form.c
         LaboratoryComponent,
         FormComponent,
         ResourceComponent,
-        ResourceFormComponent
+        ResourceFormComponent,
+        DetailComponent
     ]
 })
 export class LaboratoryModule { }

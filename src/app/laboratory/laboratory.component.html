@@ -1,13 +1,13 @@
 <section class="statistic">
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-primary btn-floating" [routerLink]="['/laboratories/add']">
+            <button class="btn btn-success btn-floating" [routerLink]="['/laboratories/add']">
                 <fa-icon icon='plus' size='2x'></fa-icon>
             </button>
         </div>
     </div>
 </section>
-<div class="container">
+<div class="col-xl-6 col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12 mb30">
     <div *ngIf="noResults; then noresults; else results"></div>
 
     <ng-template #noresults>
@@ -15,13 +15,33 @@
     </ng-template>
 
     <ng-template #results>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-xl-6 col-md-12">
+                        <div class="form-group">
+                            <input type="text" placeholder="Nome" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-md-12">
+                        <div class="form-group">
+                            <input type="text" placeholder="Localização" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xl-1 col-md-12">
+                        <button class="btn btn-primary btn-search">
+                            <fa-icon icon="search"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table table-borderless table-data">
                 <thead>
                     <tr>
                         <th>Nome</th>
                         <th>Localização</th>
-                        <th>Observação</th>
                         <th>Situação</th>
                         <th></th>
                     </tr>
@@ -34,10 +54,13 @@
                             </a>
                         </td>
                         <td> {{ laboratory.localization }} </td>
-                        <td> {{ laboratory.observation }} </td>
                         <td> {{ laboratory.situation }} </td>
                         <td class="buttons_actions">
-                            <button type="button" class="btn btn-remove" (click)="confirmDelete(laboratory)">
+                            <button class="btn btn-edit" (click)="goDetail(laboratory)">
+                                <fa-icon icon="chevron-right"></fa-icon>
+                            </button>
+
+                            <!--button type="button" class="btn btn-remove" (click)="confirmDelete(laboratory)">
                                 <fa-icon icon="trash"></fa-icon>
                             </button>
                             <button type="button" class="btn btn-edit" (click)="goEdit(laboratory)">
@@ -45,7 +68,7 @@
                             </button>
                             <button type="button" class="btn btn-resource" (click)="goResources(laboratory)">
                                 <fa-icon icon="laptop-code"></fa-icon>
-                            </button>
+                            </button-->
                         </td>
                     </tr>
                 </tbody>

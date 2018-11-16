@@ -1,26 +1,34 @@
-<div class="card">
-    <div class="card-header">
-        <strong class="card-title mb-3"> {{ isFormEdit ? 'Editar recurso' : 'Cadastrar recurso' }} </strong>
-    </div>
-    <div class="card-body">
-        <div class="mx-auto d-block">
-            <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-                <div class="form-row">
-                    <div class="form-group col-md-9">
-                        <label for="description"> Descrição </label>
-                        <input type="text" class="form-control" id="description" placeholder="Descrição"
-                            formControlName="description">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="quantity"> Quantidade </label>
-                        <input type="number" class="form-control" id="quantity" formControlName="quantity">
-                    </div>
+<div class="au-card">
+    <div class="au-card-inner">
+        <h3 class="title-2 tm-b-5">
+            <div *ngIf="!isFormEdit; then new, else edit"></div>
+            <ng-template #new>
+                <fa-icon icon="plus"></fa-icon> Novo Recurso
+            </ng-template>
+            <ng-template #edit>
+                <fa-icon icon="edit"></fa-icon> Editar Recurso
+            </ng-template>
+        </h3>
+        <hr>
+        <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label for="description"> Descrição </label>
+                    <input type="text" class="form-control" id="description" placeholder="Descrição" formControlName="description">
                 </div>
-                <div class="buttons-actions">
-                    <button class="btn btn-outline-danger" *ngIf="isFormEdit" (click)="rollbackResources()"> Cancelar </button>
-                    <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid"> {{ isFormEdit ? 'Salvar' : 'Cadastrar' }} </button>
+                <div class="form-group col-md-3">
+                    <label for="quantity"> Quantidade </label>
+                    <input type="number" class="form-control" id="quantity" formControlName="quantity">
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="buttons-actions">
+                <button class="btn btn-outline-danger" *ngIf="isFormEdit" (click)="rollbackResources()"> 
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-outline-primary" [disabled]="!formulario.valid">
+                    <fa-icon icon="check"></fa-icon> {{ isFormEdit ? 'Salvar' : 'Cadastrar' }}
+                </button>
+            </div>
+        </form>
     </div>
 </div>
