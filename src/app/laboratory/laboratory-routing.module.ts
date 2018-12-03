@@ -5,14 +5,15 @@ import { LaboratoryComponent } from './laboratory.component';
 import { FormComponent } from './form/form.component';
 import { ResourceComponent } from './resources/resource.component';
 import { DetailComponent } from './detail/detail.component';
-import { ResourceFormComponent } from './resources/resource-form/resource-form.component';
+import { AuthGuard } from '../guards/auth/auth.guard';
+import { AdminGuard } from '../guards/admin/admin.guard';
 
 const laboratoryRoutes: Routes = [
-    { path: 'laboratories', component: LaboratoryComponent },
-    { path: 'laboratories/add', component: FormComponent },
-    { path: 'laboratories/:id/detail', component: DetailComponent },
-    { path: 'laboratories/:id/edit', component: FormComponent }
-    //{ path: 'laboratories/:id/resources', component: ResourceComponent }
+    { path: 'laboratories', component: LaboratoryComponent, canActivate: [AuthGuard] },
+    { path: 'laboratories/add', component: FormComponent, canActivate: [AuthGuard] },
+    { path: 'laboratories/:id/detail', component: DetailComponent, canActivate: [AuthGuard] },
+    { path: 'laboratories/:id/edit', component: FormComponent, canActivate: [AuthGuard] },
+    { path: 'laboratories/:id/resources', component: ResourceComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

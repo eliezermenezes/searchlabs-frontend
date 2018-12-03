@@ -35,9 +35,9 @@
                             </td>
                             <td> {{ reservation.solicitation.start_hour }} </td>
                             <td class="buttons_actions">
-                                <fa-icon icon="edit"></fa-icon>
-                                <fa-icon icon="times"></fa-icon>
-                                <fa-icon icon="ban"></fa-icon>
+                                <button class="btn btn-edit" (click)="goDetail(user)">
+                                    <fa-icon icon="chevron-right"></fa-icon>
+                                </button>
                             </td>
                         </tr>
                     </tbody>

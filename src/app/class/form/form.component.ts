@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Class } from 'src/app/shared/models/class.model';
-import { Subscription } from 'rxjs';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { ClassService } from '../class.service';
-import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Events } from 'src/app/shared/components/events/events';
+import { BaseFormComponent } from '../../shared/components/base-form/base-form.component';
+import { MessageRequest } from '../../shared/components/confirm/message-request';
 
 @Component({
     selector: 'app-form',
@@ -14,99 +13,103 @@ import { Events } from 'src/app/shared/components/events/events';
     styleUrls: ['./form.component.scss'],
     providers: [ClassService]
 })
-export class FormComponent implements OnInit {
-
-    public formulario: FormGroup;
+export class FormComponent extends BaseFormComponent implements OnInit {
 
     public class: Class;
-    public subscribe: Subscription;
+    public titlePage: string = 'Turma';
+    public msg: MessageRequest = new MessageRequest();
 
     constructor(
         private utils: UtilsService,
         private formBuilder: FormBuilder,
         private classService: ClassService,
-        private toastr: ToastrService,
         private router: Router,
-        private routerActive: ActivatedRoute
-    ) { }
+        protected routerActive: ActivatedRoute
+    ) {
+        super(routerActive);
+    }
 
     async ngOnInit() {
+        this.loading = true;
         this.class = new Class();
-        this.inicializeForm();
 
-        this.subscribe = await this.routerActive.params.subscribe((params: any) => {
-            let lab_id = params['id'];
-            if (lab_id) {
-                this.utils.eventAlterHeader('Editar Classe');
-                this.get(lab_id);
-            } else {
-                this.utils.eventAlterHeader('Nova Classe');
-            }
-        });
+        this.verifyEditMode();
+        this.utils.alterHeader((this.isEditMode ? 'Alterar ' : 'Nova ') + this.titlePage, true);
+
+        await this.defineDataFormGroup();
+        this.loading = false;
     }
 
-    public inicializeForm() {
+    public async defineDataFormGroup(classe?: Class) {
 
-        this.formulario = this.formBuilder.group({
-            name: [this.class.name, Validators.required],
-            code: [this.class.code],
-            institution: [this.class.institution]
-        });
+        let dataForm = {
+            name: classe ? classe.name : null,
+            code: classe ? classe.code : null,
+            institution: classe ? classe.institution : null
+        };
+
+        await this.createFormGroup(dataForm);
     }
 
-    public onSubmit() {
+    private async createFormGroup(dataForm: any) {
 
-        if (!this.class.id) {
-            this.save();
-        } else {
-            this.update();
-        }
+        this.formulario = await this.formBuilder.group({
+            name: [dataForm.name, this.required()],
+            code: [dataForm.code],
+            institution: [dataForm.institution]
+        });
     }
 
     public async get(id: number) {
         try {
             let classe = await this.classService.getById(id);
             if (classe) {
-                this.class = Object.assign(new Class(), classe);
-                this.inicializeForm();
+                this.class = classe;
+                await this.defineDataFormGroup(this.class);
             }
         } catch (e) {
             console.log(e);
         }
     }
 
-    public async save() {
+    protected async submit() {
+
+        let valuesSubmit = Object.assign({}, this.formulario.value);
+
+        if (this.isEditMode) {
+            await this.update(valuesSubmit);
+        } else {
+            await this.save(valuesSubmit);
+        }
+    }
+
+    public async save(valuesSubmit: Class) {
         try {
-            const classCreated = await this.classService.create(this.formulario.value);
+            const classCreated = await this.classService.create(valuesSubmit);
             if (classCreated) {
                 this.router.navigate(['classes']);
-                this.toastr.success("Classe adicionada", "Sucesso");
+                this.utils.rollbackSuccess(this.msg.create_success);
             } else {
-                this.toastr.error("Não foi possível criar a classe", "Erro");
+                this.utils.rollbackError(this.msg.create_error);
             }
         } catch (e) {
             console.log(e);
-            this.toastr.error("Erro ao processar requisição", "Erro");
+            this.utils.rollbackError(this.msg.refuse_error);
         }
     }
 
-    public async update() {
+    public async update(valuesSubmit: Class) {
         try {
-            const classUpdated = await this.classService.update(this.class.id, this.formulario.value);
+            const classUpdated = await this.classService.update(this.class.id, valuesSubmit);
             if (classUpdated) {
                 this.router.navigate(['classes']);
-                this.toastr.success("Classe atualizada", "Sucesso");
+                this.utils.rollbackSuccess(this.msg.alter_success);
             } else {
-                this.toastr.error("Não foi possível editar a classe", "Erro");
+                this.utils.rollbackError(this.msg.alter_error);
             }
         } catch (e) {
             console.log(e);
-            this.toastr.error("Erro ao processar requisição", "Erro");
+            this.utils.rollbackError(this.msg.error_request);
         }
     }
-
-    ngOnDestroy() {
-        this.subscribe.unsubscribe();
-    }
-
 }

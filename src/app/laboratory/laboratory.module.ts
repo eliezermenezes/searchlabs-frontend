@@ -10,6 +10,9 @@ import { FormComponent } from './form/form.component';
 import { ResourceComponent } from './resources/resource.component';
 import { ResourceFormComponent } from './resources/resource-form/resource-form.component';
 import { DetailComponent } from './detail/detail.component';
+import { AlterSituationComponent } from './detail/alter-situation/alter-situation.component';
+import { TabsModule } from 'ngx-bootstrap';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
     imports: [
@@ -18,14 +21,18 @@ import { DetailComponent } from './detail/detail.component';
         LaboratoryRoutingModule,
         SharedModule,
         FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TabsModule.forRoot(),
+        NgxSmartModalModule.forChild()
     ],
     declarations: [
         LaboratoryComponent,
         FormComponent,
         ResourceComponent,
         ResourceFormComponent,
-        DetailComponent
-    ]
+        DetailComponent,
+        AlterSituationComponent
+    ],
+    bootstrap: [AlterSituationComponent]
 })
 export class LaboratoryModule { }

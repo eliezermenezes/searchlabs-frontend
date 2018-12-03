@@ -33,7 +33,17 @@ import {
     faSitemap,
     faMapMarked,
     faCogs,
-    faPencilAlt
+    faPencilAlt,
+    faMinusCircle,
+    faInfoCircle,
+    faUserLock,
+    faMale,
+    faFemale,
+    faUserCircle,
+    faLock,
+    faSyncAlt,
+    faFile,
+    faLaptop
 } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -64,7 +74,17 @@ library.add(
     faSitemap,
     faMapMarked,
     faCogs,
-    faPencilAlt
+    faPencilAlt,
+    faMinusCircle,
+    faInfoCircle,
+    faUserLock,
+    faMale,
+    faFemale,
+    faUserCircle,
+    faLock,
+    faSyncAlt,
+    faFile,
+    faLaptop
 );
 
 @NgModule({

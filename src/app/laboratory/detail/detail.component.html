@@ -1,35 +1,76 @@
-<section class="statistic">
+<section class="statistic" *ngIf="!loading">
     <div class="container">
-
-        <div class="col-md-12">
-            <button class="btn btn-success btn-floating" (click)="goEdit()">
-                <fa-icon icon='pencil-alt' size='2x'></fa-icon>
-            </button>
-            <button class="btn btn-danger btn-floating-other" (click)="confirmDelete()">
-                <fa-icon icon='trash' size='2x'></fa-icon>
-            </button>
-        </div>
-        <div class="row">
-            <div class="col-xl-6 col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12 mb30">
-                <div class="au-card" *ngIf="laboratory">
-                    <div class="au-card-inner">
-                        <h5>
-                            <fa-icon icon="map-marked"></fa-icon> {{ laboratory.localization }}
-                        </h5>
-                        <h6>
-                            <span *ngIf="laboratory.situation == 'ok'" class="text-success">
-                                <fa-icon icon="check"></fa-icon> Regular
+        <div class="col-xl-6 offset-lg-3 col-lg-12 col-12 mb30">
+            <div class="au-card">
+                <tabset>
+                    <tab heading="Informações do laboratório">
+                        <div class="body-detail mt-3">
+                            <span class="mt-5">
+                                Nome do laboratório:
                             </span>
-                            <span *ngIf="laboratory.situation !== 'ok'" class="text-info">
-                                <fa-icon icon="cogs"></fa-icon> Em manutenção
+                            <h5>
+                                {{ laboratory.name }}
+                            </h5>
+                            <span class="mt-5">
+                                Localização do laboratório:
                             </span>
-                        </h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12 mb30">
-                <app-resources></app-resources>
+                            <h5>
+                                {{ laboratory.localization }}
+                            </h5>
+                            <span class="mt-5">
+                                Situação:
+                            </span>
+                            <h5 class="text-success" *ngIf="laboratory.situation == 'ok'">
+                                Regular
+                            </h5>
+                            <h5 class="text-info" *ngIf="laboratory.situation != 'ok'">
+                                Em manutenção
+                            </h5>
+                            <div *ngIf="laboratory.observation">
+                                <span>
+                                    Observação:
+                                </span>
+                                <h5>
+                                    {{ laboratory.observation }}
+                                </h5>
+                            </div>
+                            <span class="mt-5">
+                                Data de cadastro:
+                            </span>
+                            <h5>
+                                {{ laboratory.createdAt | date: 'fullDate' }}
+                            </h5>
+                            <span class="mt-5">
+                                Última modificação:
+                            </span>
+                            <h5>
+                                {{ laboratory.updatedAt | date: 'fullDate' }}
+                            </h5>
+                            <hr>
+                            <div class="text-center" *ngIf="hasPermissionOfAdm">
+                                <button type="button" class="btn btn-outline-primary" (click)="editSituation()">
+                                    <fa-icon icon="pencil-alt"></fa-icon>
+                                    Alterar situação
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="confirmDelete()">
+                                    <fa-icon icon="times"></fa-icon>
+                                    Excluir
+                                </button>
+                                <button type="button" class="btn btn-outline-info" (click)="goEdit()">
+                                    <fa-icon icon="pencil-alt"></fa-icon>
+                                    Alterar dados
+                                </button>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab heading="Recursos do laboratório">
+                        <app-resources></app-resources>
+                    </tab>
+                </tabset>
             </div>
         </div>
     </div>
+    <ngx-smart-modal identifier="alterSituation">
+        <app-alter-situation [laboratory]="laboratory" (resp)="refreshPage($event)"></app-alter-situation>
+    </ngx-smart-modal>
 </section>

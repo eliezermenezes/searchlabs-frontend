@@ -3,9 +3,8 @@ import { Laboratory } from './../../shared/models/laboratory.model';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { SolicitationService } from '../solicitation.service';
-import { Solicitation } from 'src/app/shared/models/solicitation.module';
+import { Solicitation } from 'src/app/shared/models/solicitation.model';
 import { BaseFormComponent } from 'src/app/shared/components/base-form/base-form.component';
-import { ToastrService } from 'ngx-toastr';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ClassService } from './../../class/class.service';
@@ -13,6 +12,7 @@ import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap
 import { Schedule } from './../../shared/interface/schedule';
 import { DaysWeek } from './../../shared/interface/days_week';
 import { Class } from 'src/app/shared/models/class.model';
+import { MessageRequest } from '../../shared/components/confirm/message-request';
 
 @Component({
     selector: 'app-form',
@@ -34,9 +34,10 @@ export class FormComponent extends BaseFormComponent implements OnInit {
     public laboratories: Laboratory[];
     public titlePage: string = 'Solicitação de Reserva';
 
+    public msg: MessageRequest = new MessageRequest();
+
     constructor(
         private formBuilder: FormBuilder,
-        private toastr: ToastrService,
         private utils: UtilsService,
         private router: Router,
         private solicitationService: SolicitationService,
@@ -57,7 +58,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
         await this.changeSchedules();
         await this.verifyEditMode();
 
-        this.utils.eventAlterHeader((this.isEditMode ? 'Alterar ' : 'Nova ') + this.titlePage);
+        this.utils.alterHeader((this.isEditMode ? 'Alterar ' : 'Nova ') + this.titlePage);
 
         await this.defineDataFormGroup();
         this.loading = false;
@@ -81,32 +82,32 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const solicitationCreated = await this.solicitationService.create(valuesSubmit);
             if (solicitationCreated) {
                 this.router.navigate(['solicitations']);
-                this.toastr.success("Solicitação registrada", "Sucesso");
+                this.utils.rollbackSuccess(this.msg.register_success);
             } else {
-                this.toastr.error("Não foi possível registrar a solicitação", "Erro");
+                this.utils.rollbackError(this.msg.register_error);
             }
         } catch (e) {
             console.log(e);
-            this.toastr.error("Erro ao processar requisição", "Erro");
+            this.utils.rollbackError(this.msg.error_request);
         }
     }
 
     public async update(valuesSubmit: Solicitation) {
         try {
-            const solicitationUpdated = await this.solicitationService.update(this.solicitation.id, this.formulario.value);
+            const solicitationUpdated = await this.solicitationService.update(this.solicitation.id, valuesSubmit);
             if (solicitationUpdated) {
                 this.router.navigate(['solicitations']);
-                this.toastr.success("Solicitação atualizada", "Sucesso");
+                this.utils.rollbackSuccess(this.msg.alter_success);
             } else {
-                this.toastr.error("Não foi possível editar a solicitação", "Erro");
+                this.utils.rollbackError(this.msg.alter_error);
             }
         } catch (e) {
             console.log(e);
-            this.toastr.error("Erro ao processar requisição", "Erro");
+            this.utils.rollbackError(this.msg.error_request);
         }
     }
 
-    public async  submit() {
+    public async submit() {
 
         let valuesSubmit = Object.assign({}, this.formulario.value);
         let date = {
@@ -195,7 +196,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
 
     private async changeClasses() {
         try {
-            const classes = await this.classService.getOnlyClasses(1);
+            const classes = await this.classService.getOnlyClasses();
             if (classes.length > 0) {
                 this.classes = classes;
             }

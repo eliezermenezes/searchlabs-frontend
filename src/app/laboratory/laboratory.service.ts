@@ -37,4 +37,21 @@ export class LaboratoryService {
     public async getById(id: number) {
         return await this.http.get<Laboratory>(`${this.urlBase}/${id}`).toPromise();
     }
+
+    public async alterSituation(id: number, situation: string) {
+        return await this.http.post<Laboratory>(`${this.urlBase}/${id}/alter_situation`, situation).toPromise();
+    }
+
+    public async situations() {
+        return await [
+            {
+                value: 'ok',
+                desc: 'Regular'
+            },
+            {
+                value: 'in maintenance',
+                desc: 'Em manutenção'
+            }
+        ];
+    }
 }

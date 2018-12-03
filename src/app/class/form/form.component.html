@@ -1,35 +1,65 @@
-<section class="statistic">
+<section class="statistic" *ngIf="!loading">
     <div class="container">
-        <div class="row">
-            <div class="col-xl-10 col-lg-10 offset-lg-1 col-md-12 col-sm-12 col-12 mb30">
-                <div class="tour-booking-form">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="au-card">
+                <div class="au-card-title">
+                    <div *ngIf="isEditMode">
+                        <fa-icon icon="pencil-alt"></fa-icon>
+                        Altere dados da turma.
+                    </div>
+                    <div *ngIf="!isEditMode">
+                        <fa-icon icon="plus"></fa-icon>
+                        Cadastre uma nova turma.
+                    </div>
+                </div>
+                <div class="au-card-inner">
                     <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-                        <div class="row">
-                            <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+                        <div class="form-row">
+                            <div class="col-xl-12 col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="name"> Nome: <field-required></field-required></label>
-                                    <input id="name" type="text" placeholder="Nome" class="form-control" formControlName="name">
+                                    <div [ngClass]="applyStyles('name')">
+                                        <label for="name" class="control-label"> Nome
+                                            <field-required></field-required>
+                                        </label>
+                                        <input type="text" class="form-control" id="name" formControlName="name"
+                                               placeholder="Nome">
+                                        <error-required [showError]="verifyFieldTouched('name')"
+                                                        messageError="Preenchimento obrigatório."></error-required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                            <div class="col-xl-12 col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="code"> Código: </label>
-                                    <input id="code" type="text" placeholder="Código" class="form-control" formControlName="code">
+                                    <label for="code" class="control-label"> Código </label>
+                                    <input type="text" class="form-control" id="code"
+                                           formControlName="code"
+                                           placeholder="Código da turma">
                                 </div>
                             </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="col-xl-12 col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="institution"> Instituição: </label>
-                                    <input id="institution" type="text" placeholder="Instituição" class="form-control" formControlName="institution">
+                                    <label for="institution" class="control-label"> Instituição </label>
+                                    <input type="text" class="form-control" id="institution"
+                                           formControlName="institution"
+                                           placeholder="Instituição de Ensino">
                                 </div>
                             </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid"> Salvar </button>
+                            <div class="col-xl-12 col-md-12 mb-3">
+                                <button class="btn btn-primary icon-btn btn-block btn-lg" type="submit">
+                                    <fa-icon icon="check"></fa-icon>
+                                    Salvar
+                                </button>
+                            </div>
+                            <div class="col-xl-12 col-md-12">
+                                <div class="field-required">
+                                    <em>
+                                        <field-required></field-required>
+                                    </em> Preenchimento obrigatório.
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

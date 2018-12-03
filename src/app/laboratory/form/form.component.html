@@ -1,33 +1,60 @@
-<section class="statistic">
+<section class="statistic" *ngIf="!loading">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 offset-lg-2">
-
-                <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-
-                    <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                                <label for="name" class="control-label"> Nome <field-required></field-required> </label>
-                                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nome">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="au-card">
+                <div class="au-card-title">
+                    <div *ngIf="isEditMode">
+                        <fa-icon icon="pencil-alt"></fa-icon> Altere dados do laboratório.
+                    </div>
+                    <div *ngIf="!isEditMode">
+                        <fa-icon icon="plus"></fa-icon> Cadastre um novo laboratório.
+                    </div>
+                </div>
+                <div class="au-card-inner">
+                    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+                        <div class="form-row">
+                            <div class="col-xl-12 col-md-12">
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('name')">
+                                        <label for="name" class="control-label"> Nome
+                                            <field-required></field-required>
+                                        </label>
+                                        <input type="text" class="form-control" id="name" formControlName="name"
+                                               placeholder="Nome">
+                                        <error-required [showError]="verifyFieldTouched('name')"
+                                                        messageError="Preenchimento obrigatório."></error-required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="localization" class="control-label"> Localização </label>
+                                    <input type="text" class="form-control" id="localization"
+                                           formControlName="localization"
+                                           placeholder="Prédio/Sala">
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="observation" class="control-label"> Observação </label>
+                                    <textarea class="form-control" id="observation" formControlName="observation"
+                                              placeholder="Observação"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-md-12 mb-3">
+                                <button class="btn btn-primary icon-btn btn-block btn-lg" type="submit">
+                                    <fa-icon icon="check"></fa-icon>
+                                    Salvar
+                                </button>
+                            </div>
+                            <div class="col-xl-12 col-md-12">
+                                <div class="field-required">
+                                    <em><field-required></field-required></em> Preenchimento obrigatório.
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                                <label for="localization" class="control-label"> Localização </label>
-                                <input type="text" class="form-control" id="localization" formControlName="localization"
-                                    placeholder="Prédio/Sala">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="observation" class="control-label"> Observação </label>
-                        <textarea class="form-control" id="observation" formControlName="observation" placeholder="Observação"></textarea>
-                    </div>
-                    <button class="btn btn-primary" type="submit" [disabled]="!formulario.valid"> Salvar </button>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

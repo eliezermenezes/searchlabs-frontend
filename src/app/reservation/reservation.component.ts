@@ -24,7 +24,7 @@ export class ReservationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.utilsService.eventAlterHeader('Reservas de laboratórios');
+        this.utilsService.alterHeader('Reservas de laboratórios');
         this.reservation = new Reservation();
         this.reservations = new Array<Reservation>();
 

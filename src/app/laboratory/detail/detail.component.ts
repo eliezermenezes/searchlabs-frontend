@@ -1,76 +1,69 @@
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Laboratory } from 'src/app/shared/models/laboratory.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LaboratoryService } from '../laboratory.service';
 import { UtilsService } from 'src/app/shared/services/utils.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
-import { ToastrService } from 'ngx-toastr';
-import { EventsService } from 'src/app/shared/services/event.service';
+import { TabsetComponent } from 'ngx-bootstrap';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+import { MessageRequest } from '../../shared/components/confirm/message-request';
+import { ConfigDialog } from '../../shared/components/confirm/config-dialog';
+import { NgxCoolDialogsService } from 'ngx-cool-dialogs';
+import { DetailBaseComponent } from '../../shared/components/detail-base/detail-base.component';
 
 @Component({
     selector: 'app-detail',
     templateUrl: './detail.component.html',
     styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit, OnDestroy {
+export class DetailComponent extends DetailBaseComponent implements OnInit {
+    @ViewChild('staticTabs') staticTabs: TabsetComponent;
 
-    public laboratory: Laboratory;
-    public subscribe: Subscription;
-    public noResults: boolean;
-
-    public bsModalRef: BsModalRef;
+    public config: ConfigDialog = new ConfigDialog();
+    public msg: MessageRequest = new MessageRequest();
 
     constructor(
-        private utils: UtilsService,
+        protected utils: UtilsService,
         private laboratoryService: LaboratoryService,
         private router: Router,
-        private routerActive: ActivatedRoute,
-        private modalService: BsModalService,
-        private toastr: ToastrService,
-        private events: EventsService
+        protected routerActive: ActivatedRoute,
+        public ngxSmartModalService: NgxSmartModalService,
+        private dialogs: NgxCoolDialogsService
     ) {
-        this.events.on('DELETE_LABORATORY', (id: number) => {
-            this.deleteLaboratory(id);
-        });
+        super(routerActive, utils);
     }
 
     public async ngOnInit() {
-
-        this.subscribe = await this.routerActive.params.subscribe((params: any) => {
-            let lab_id = params['id'];
-            if (lab_id) {
-                this.getLaboratory(lab_id);
-            } else {
-                this.router.navigate(['/laboratories']);
-            }
-        });
+        this.loading = true;
+        await this.loadDetail();
     }
 
-    public async getLaboratory(id: number) {
+    protected async get(id: number) {
         try {
             let laboratory = await this.laboratoryService.getById(id);
             if (laboratory) {
-                this.utils.eventAlterHeader('Detalhes - ' + laboratory.name);
+                this.utils.alterHeader('Detalhes - ' + laboratory.name, true);
                 this.laboratory = laboratory;
+            } else {
+                this.noResults = true;
             }
         } catch (e) {
+            this.noResults = true;
             console.log(e);
+        } finally {
+            this.loading = false;
         }
     }
 
-    public async deleteLaboratory(id: number) {
+    public async delete() {
         try {
-            const labDeleted = await this.laboratoryService.delete(id);
+            const labDeleted = await this.laboratoryService.delete(this.laboratory.id);
             if (!labDeleted) {
-                this.toastr.error("Não foi possível deletar o laboratório", "Erro");
+                this.utils.rollbackError(this.msg.delete_error);
             } else {
-                this.toastr.success("Laboratório deletado", "Sucesso");
+                this.utils.rollbackSuccess(this.msg.delete_success);
                 this.router.navigate(['laboratories']);
             }
         } catch (error) {
-            this.toastr.error("Erro ao processar a requisição", "Erro");
+            this.utils.rollbackError(this.msg.error_request);
             console.log(error);
         }
     }
@@ -80,17 +73,18 @@ export class DetailComponent implements OnInit, OnDestroy {
     }
 
     public confirmDelete() {
-        const initialState = {
-            title: 'laboratório',
-            event: 'DELETE_LABORATORY',
-            model: this.laboratory
-        };
-
-        this.bsModalRef = this.modalService.show(ConfirmComponent, { initialState });
+        this.dialogs.confirm(this.config.msg_confirm).subscribe(response => {
+            if (response) {
+                this.delete();
+            }
+        });
     }
 
-    public ngOnDestroy() {
-        this.subscribe.unsubscribe();
+    public editSituation() {
+        this.ngxSmartModalService.getModal('alterSituation').open();
     }
 
+    public refreshPage(event: any) {
+        this.get(event);
+    }
 }

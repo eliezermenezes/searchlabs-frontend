@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
-import { ToastrService } from 'ngx-toastr';
 import { UtilsService } from '../shared/services/utils.service';
-
 import { User } from '../shared/models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user',
@@ -19,21 +18,16 @@ export class UserComponent implements OnInit {
 
     constructor(
         private userService: UserService,
-        private toastr: ToastrService,
-        private utilsService: UtilsService
-    ) {
-    }
+        private utilsService: UtilsService,
+        private router: Router
+    ) {}
 
     ngOnInit() {
-        this.utilsService.eventAlterHeader('Usuários');
+        this.utilsService.alterHeader('Usuários');
         this.user = new User();
         this.users = new Array<User>();
 
         this.listUsers();
-    }
-
-    public addUser() {
-        console.log('aadd');
     }
 
     public async listUsers() {
@@ -48,6 +42,10 @@ export class UserComponent implements OnInit {
             this.noResults = true;
             console.log(error);
         }
+    }
+
+    public goDetail(user: User) {
+        this.router.navigate(['/users/' + user.id + '/detail']);
     }
 }
 

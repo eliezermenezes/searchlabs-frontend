@@ -14,7 +14,7 @@ export class ClassService {
         this.urlBase = `${environment.URL_SEARCHLABS}classes`;
     }
 
-    public async list() {
+    public async list(situation?: string) {
         return await this.http.get<Class[]>(this.urlBase).toPromise();
     }
 
@@ -38,7 +38,7 @@ export class ClassService {
         return await this.http.get<Class[]>(`${this.urlBase}/by/teacher/${teacher}`).toPromise();
     }
 
-    public async getOnlyClasses(teacher: number) {
-        return await this.http.get<Class[]>(`${this.urlBase}/by/teacher/${teacher}/only`).toPromise();
+    public async getOnlyClasses() {
+        return await this.http.get<Class[]>(`${this.urlBase}/by/teacher/only`).toPromise();
     }
 }

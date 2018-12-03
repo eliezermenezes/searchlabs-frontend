@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Resource } from 'src/app/shared/models/resource.model';
-import { ToastrService } from 'ngx-toastr';
 import { EventsService } from 'src/app/shared/services/event.service';
 import { ResourceService } from './../resource.service';
 import { Laboratory } from 'src/app/shared/models/laboratory.model';
-import { Events } from 'src/app/shared/components/events/events';
+import { UtilsService } from '../../../shared/services/utils.service';
+import { MessageRequest } from '../../../shared/components/confirm/message-request';
 
 @Component({
     selector: 'app-resource-form',
@@ -22,14 +22,15 @@ export class ResourceFormComponent implements OnInit {
     public isFormEdit: boolean;
     public formulario: FormGroup;
     public resource: Resource;
+    public msg: MessageRequest = new MessageRequest();
 
     constructor(
         private formBuilder: FormBuilder,
         private resourceService: ResourceService,
-        private toastr: ToastrService,
         private events: EventsService,
+        private utils: UtilsService
     ) {
-        this.events.on(Events.prototype.resourceEDIT, (resource: Resource) => {
+        this.events.on('_altResource', (resource: Resource) => {
             this.resource = resource;
             this.isFormEdit = true;
             this.inicializeFormulario();
@@ -45,7 +46,7 @@ export class ResourceFormComponent implements OnInit {
         this.formulario = this.formBuilder.group({
             laboratory_id: [null],
             description: [this.resource.description, Validators.required],
-            quantity: [this.resource.quantity]
+            quantity: [this.resource.quantity, [Validators.required, Validators.min(1)]]
         });
     }
 
@@ -69,14 +70,13 @@ export class ResourceFormComponent implements OnInit {
             if (resourceCreated) {
                 this.formulario.reset();
                 this.emitFeedbackForGetter();
-
-                this.toastr.success("Recurso adicionado", "Sucesso");
+                this.utils.rollbackSuccess(this.msg.create_success);
             } else {
-                this.toastr.error("Recurso não adicionado", "Erro");
+                this.utils.rollbackError(this.msg.create_error);
             }
         } catch (e) {
             console.log(e);
-            this.toastr.error("Recurso não adicionado", "Erro");
+            this.utils.rollbackError(this.msg.error_request);
         }
     }
 
@@ -87,18 +87,18 @@ export class ResourceFormComponent implements OnInit {
             if (resourcedated) {
                 this.rollbackResources();
                 this.emitFeedbackForGetter();
-                this.toastr.success("Recurso atualizado", "Sucesso");
+                this.utils.rollbackSuccess(this.msg.alter_success);
             } else {
-                this.toastr.error("Recurso não atualizado", "Erro");
+                this.utils.rollbackError(this.msg.alter_error);
             }
         } catch (e) {
             console.log(e);
-            this.toastr.error("Recurso não atualizado", "Erro");
+            this.utils.rollbackError(this.msg.error_request);
         }
     }
 
     private emitFeedbackForGetter() {
-        this.feedBackSon.emit(Events.prototype.resourceREFRESH);
+        this.feedBackSon.emit('_refreshResource');
     }
 
     public rollbackResources() {

@@ -1,34 +1,44 @@
-<div *ngIf="laboratory">
+<div *ngIf="laboratory && hasPermissionAdmin">
     <app-resource-form [laboratory]="laboratory" [resourceEdit]="resource" (feedBackSon)="refleshResources($event)"></app-resource-form>
 </div>
 
-<div *ngIf="noResults; then noresults; else results"></div>
+<h3>Recursos cadastrados</h3>
 
+<div *ngIf="noResults; then noresults; else results"></div>
 <ng-template #noresults>
     <no-result></no-result>
 </ng-template>
 
 <ng-template #results>
-
     <div class="table-responsive">
-        <table class="table table-borderless table-data">
+        <table class="table table-striped">
             <thead>
                 <tr>
+                    <th class="text-left">Qnt</th>
                     <th>Descrição</th>
-                    <th>Quantidade</th>
-                    <th></th>
+                    <th class="text-right">Adicionado</th>
+                    <th class="text-right" *ngIf="hasPermissionAdmin">
+                        <fa-icon icon="cogs"></fa-icon>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let resource of resources; let num = index">
-                    <td> {{ resource.description }} </td>
-                    <td> {{ resource.quantity }} </td>
-                    <td class="buttons_actions">
-                        <button type="button" class="btn btn-remove" (click)="delete(resource)">
-                            <fa-icon icon="trash"></fa-icon>
+                <tr *ngFor="let resource of resources">
+                    <td class="text-left">
+                        {{ resource.quantity }}
+                    </td>
+                    <td class="text-uppercase">
+                        {{ resource.description }}
+                    </td>
+                    <td class="text-right">
+                        {{ resource.createdAt | date }}
+                    </td>
+                    <td class="td-actions text-right" *ngIf="hasPermissionAdmin">
+                        <button type="button" class="btn btn-danger btn-link btn-just-icon btn-sm" (click)="delete(resource)">
+                            <fa-icon icon="times"></fa-icon>
                         </button>
-                        <button type="button" class="btn btn-edit" (click)="edit(resource)">
-                            <fa-icon icon="edit"></fa-icon>
+                        <button type="button" class="btn btn-info btn-link btn-just-icon btn-sm" (click)="edit(resource)">
+                            <fa-icon icon="pencil-alt"></fa-icon>
                         </button>
                     </td>
                 </tr>

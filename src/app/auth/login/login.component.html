@@ -1,14 +1,4 @@
-<section class="statistic">
-    <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-primary btn-floating" (click)="addLaboratory()">
-                <fa-icon icon='plus' size='2x'></fa-icon>
-            </button>
-        </div>
-    </div>
-</section>
-
-<div *ngIf="!user" class="card text-center">
+<!--div *ngIf="!user" class="card text-center">
     <h6 class="card-header">
         Social Login Demo
     </h6>
@@ -35,4 +25,26 @@
     <div class="card-block">
         <button class="btn btn-danger" (click)="signOut()">Sign out</button>
     </div>
-</div>
+</div-->
+
+
+<section class="login-block">
+    <div class="container">
+        <div class="col-md-4 offset-md-4 login-sec">
+            <div class="login-banner">
+                <h2 class="text-center text-uppercase">
+                    Search Labs
+                </h2>
+                <h3 *ngIf="userNotFound">
+                    {{ errorLogin }}
+                </h3>
+                <div class="text-center">
+                    <button class="btn btn-social" (click)="signInWithGoogle()">
+                        Entrar com Google
+                    </button>
+                </div>
+                <div class="copy-text"> Desenvolvido por <span> Eliezer Menezes </span></div>
+            </div>
+        </div>
+    </div>
+</section>

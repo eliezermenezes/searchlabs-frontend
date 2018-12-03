@@ -19,7 +19,7 @@ export class OccupationMapComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.utilsService.eventAlterHeader('Mapa de Ocupação dos Laboratórios');
+        this.utilsService.alterHeader('Mapa de Ocupação dos Laboratórios');
 
         this.onlyLaboratories();
     }

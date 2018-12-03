@@ -1969,8 +1969,8 @@ section {
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    background: #365cad;
-    padding: 0 35px;
+    background: #343a40;
+    padding: 0 15px;
 }
 
 @media (max-width: 991px) {
@@ -2070,7 +2070,7 @@ section {
 }
 
 .navbar-sidebar2 .navbar__list li:hover > a {
-    color: rgb(37, 98, 143);
+    color: rgb(87, 174, 188);
     text-decoration: none;
 }
 
@@ -2087,10 +2087,8 @@ section {
 }
 
 .navbar-sidebar2 .navbar__list li.active > a {
-    color: rgb(37, 98, 143);
-    background-color: #e1e6ea;
+    color: rgb(36, 162, 184);
     font-weight: 500;
-    border-right: 2px solid rgb(37, 98, 143);
 }
 
 .navbar-sidebar2 .navbar__sub-list {

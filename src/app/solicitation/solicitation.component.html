@@ -1,10 +1,8 @@
 <section class="statistic">
-    <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-success btn-floating" [routerLink]="['/solicitations/register']">
-                <fa-icon icon="plus" size="2x"></fa-icon>
-            </button>
-        </div>
+    <div class="btns-floating">
+        <button class="btn btn-success btn-floating" [routerLink]="['/solicitations/register']">
+            <fa-icon icon="plus" size="2x"></fa-icon>
+        </button>
     </div>
 </section>
 
@@ -48,26 +46,37 @@
                 <thead>
                     <tr>
                         <th>Laboratório</th>
+                        <th>Professor</th>
                         <th>Turma</th>
-                        <th>Data</th>
-                        <th>Hora</th>
                         <th>Situação</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let solicitation of solicitations; let num = index">
-                        <td> {{ solicitation.laboratory.name }} </td>
+                        <td>
+                            <a (click)="goDetail(solicitation)">{{ solicitation.laboratory.name }}</a>
+                        </td>
+                        <td> {{ solicitation.class.instructor.name }} {{ solicitation.class.instructor.family_name }}
+                        </td>
                         <td> {{ solicitation.class.name }} </td>
-                        <td> {{ solicitation.start_date }} </td>
-                        <td> {{ solicitation.start_hour }} </td>
-                        <td> {{ solicitation.situation }} </td>
+                        <td>
+                            <span class="text-info" *ngIf="solicitation.situation == 'opened'">
+                                Aguardando análise
+                            </span>
+                            <span class="text-success" *ngIf="solicitation.situation == 'accepted'">
+                                Aceita
+                            </span>
+                            <span class="text-danger" *ngIf="solicitation.situation == 'refused'">
+                                Recusada
+                            </span>
+                            <span class="text-dark" *ngIf="solicitation.situation == 'canceled'">
+                                Cancelada
+                            </span>
+                        </td>
                         <td class="buttons_actions">
-                            <button type="button" class="btn btn-remove" (click)="confirmDelete(solicitation)">
-                                <fa-icon icon="trash"></fa-icon>
-                            </button>
-                            <button type="button" class="btn btn-edit" (click)="goEdit(solicitation)">
-                                <fa-icon icon="edit"></fa-icon>
+                            <button class="btn btn-edit" (click)="goDetail(solicitation)">
+                                <fa-icon icon="chevron-right"></fa-icon>
                             </button>
                         </td>
                     </tr>

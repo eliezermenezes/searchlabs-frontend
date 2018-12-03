@@ -1,4 +1,4 @@
-import { Solicitation } from 'src/app/shared/models/solicitation.module';
+import { Solicitation } from 'src/app/shared/models/solicitation.model';
 export class Reservation {
     public id: number;
     public solicitation: Solicitation;

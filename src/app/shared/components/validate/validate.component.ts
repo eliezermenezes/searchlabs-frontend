@@ -66,4 +66,12 @@ export class ValidateComponent implements OnInit {
         return Validators.required;
     };
 
+    protected phone() {
+        return Validators.pattern('([0-9]{2}) [0-9]{1} [0-9]{4}-[0-9]{4}$');
+    }
+
+    protected email() {
+        return Validators.email;
+    }
+
 }

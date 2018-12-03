@@ -15,6 +15,8 @@ export class LaboratoryComponent implements OnInit {
     public laboratories: Laboratory[];
     public noResults: boolean;
 
+    public hasPermissionOfAdmin: boolean;
+
     constructor(
         private utils: UtilsService,
         private laboratoryService: LaboratoryService,
@@ -22,9 +24,9 @@ export class LaboratoryComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.utils.eventAlterHeader('Laboratórios');
-
+        this.utils.alterHeader('Laboratórios');
         this.laboratories = new Array<Laboratory>();
+        this.verifyPermission();
         this.listLaboratories();
     }
 
@@ -44,5 +46,9 @@ export class LaboratoryComponent implements OnInit {
 
     public goDetail(laboratory: Laboratory) {
         this.router.navigate(['laboratories/' + laboratory.id + '/detail']);
+    }
+
+    public verifyPermission() {
+        this.hasPermissionOfAdmin = this.utils.hasPermissionOfAdmin();
     }
 }

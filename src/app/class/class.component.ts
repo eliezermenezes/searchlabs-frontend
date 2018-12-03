@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilsService } from '../shared/services/utils.service';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { EventsService } from '../shared/services/event.service';
 import { Class } from '../shared/models/class.model';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { ClassService } from './class.service';
-import { ConfirmComponent } from '../shared/components/confirm/confirm.component';
 
 @Component({
     selector: 'app-class',
@@ -19,25 +15,18 @@ export class ClassComponent implements OnInit {
     public classes: Class[];
     public noResults: boolean;
 
-    public bsModalRef: BsModalRef;
+    public hasPermissionOfAdmin: boolean;
 
     constructor(
         private utils: UtilsService,
         private classService: ClassService,
-        private router: Router,
-        private toastr: ToastrService,
-        private modalService: BsModalService,
-        private events: EventsService
-    ) {
-        this.events.on('DELETE_CLASS', (id: number) => {
-            this.deleteClass(id);
-        });
-    }
+        private router: Router
+    ) {}
 
     ngOnInit() {
-        this.utils.eventAlterHeader('Classes');
-
+        this.utils.alterHeader('Classes');
         this.classes = new Array<Class>();
+        this.verifyPermission();
         this.listClasses();
     }
 
@@ -55,37 +44,11 @@ export class ClassComponent implements OnInit {
         }
     }
 
-    public async deleteClass(id: number) {
-        try {
-            const classDeleted = await this.classService.delete(id);
-            if (!classDeleted) {
-                this.toastr.error("Não foi possível deletar a classe", "Erro");
-            } else {
-                this.toastr.success("Classe deletada", "Sucesso");
-                this.listClasses();
-            }
-        } catch (error) {
-            this.toastr.error("Erro ao processar a requisição", "Erro");
-            console.log(error);
-        }
+    public goDetail(classe: Class) {
+        this.router.navigate(['classes/' + classe.id + '/detail']);
     }
 
-    public confirmDelete(classs) {
-        const initialState = {
-            title: 'classe',
-            event: 'DELETE_CLASS',
-            model: classs
-        };
-
-        this.bsModalRef = this.modalService.show(ConfirmComponent, { initialState });
+    public verifyPermission() {
+        this.hasPermissionOfAdmin = this.utils.hasPermissionOfAdmin();
     }
-
-    public goEdit(classs: Class) {
-        this.router.navigate(['classes/' + classs.id + '/editar']);
-    }
-
-    public goResources(classs: Class) {
-        this.router.navigate(['classes/' + classs.id + '/resources']);
-    }
-
 }

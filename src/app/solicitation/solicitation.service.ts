@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Solicitation } from '../shared/models/solicitation.module';
+import { Solicitation } from '../shared/models/solicitation.model';
 import { Schedule } from '../shared/interface/schedule';
 import { DaysWeek } from '../shared/interface/days_week';
 
@@ -16,8 +16,15 @@ export class SolicitationService {
         this.url_base = `${environment.URL_SEARCHLABS}solicitations`;
     }
 
-    public async list() {
-        return await this.http.get<Solicitation[]>(this.url_base).toPromise();
+    public async list(situation?: string) {
+        let params = null;
+        if (situation) {
+            params = new HttpParams().set('situation', `${situation}`);
+        } else {
+            params = new HttpParams().set('status', "active");
+        }
+
+        return await this.http.get<Solicitation[]>(this.url_base, {params}).toPromise();
     }
 
     public async create(solicitation: Solicitation) {
@@ -34,6 +41,18 @@ export class SolicitationService {
 
     public async getById(id: number) {
         return await this.http.get<Solicitation>(`${this.url_base}/${id}`).toPromise();
+    }
+
+    public async accept(id: number, bodyRequest?: Object) {
+        return await this.http.post<Solicitation>(`${this.url_base}/${id}/accept`, bodyRequest).toPromise();
+    }
+
+    public async refuse(id: number, bodyRequest?: Object) {
+        return await this.http.post<Solicitation>(`${this.url_base}/${id}/refuse`, bodyRequest).toPromise();
+    }
+
+    public async cancel(id: number, bodyRequest?: Object) {
+        return await this.http.post<Solicitation>(`${this.url_base}/${id}/cancel`, bodyRequest).toPromise();
     }
 
     public async getDaysWeek() {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UtilsService } from './../shared/services/utils.service';
-import { Solicitation } from '../shared/models/solicitation.module';
+import { Solicitation } from '../shared/models/solicitation.model';
 import { SolicitationService } from './solicitation.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class SolicitationComponent implements OnInit {
         ) { }
 
     ngOnInit() {
-        this.utilsService.eventAlterHeader('Solicitações de Reservas');
+        this.utilsService.alterHeader('Solicitações de Reservas');
 
         this.solicitations = new Array<Solicitation>();
         this.listSolicitations();
@@ -42,7 +42,8 @@ export class SolicitationComponent implements OnInit {
             console.log(error);
         }
     }
-    public goEdit(solicitation: Solicitation) {
-        this.router.navigate(['/solicitations/' + solicitation.id + '/edit']);
+
+    public goDetail(solicitation: Solicitation) {
+        this.router.navigate(['/solicitations/' + solicitation.id + '/detail']);
     }
 }

@@ -8,6 +8,9 @@ import { FormComponent } from './form/form.component';
 import { DetailComponent } from './detail/detail.component';
 import { ClassRoutingModule } from './class.routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { TabsModule } from 'ngx-bootstrap';
+import { TopicsComponent } from './topics/topics.component';
+import { TopicFormComponent } from './topics/topic-form/topic-form.component';
 
 @NgModule({
     imports: [
@@ -15,12 +18,15 @@ import { SharedModule } from '../shared/shared.module';
         ClassRoutingModule,
         FontAwesomeModule,
         SharedModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TabsModule.forRoot()
     ],
     declarations: [
         ClassComponent,
         FormComponent,
-        DetailComponent
+        DetailComponent,
+        TopicsComponent,
+        TopicFormComponent
     ]
 })
 export class ClassModule { }

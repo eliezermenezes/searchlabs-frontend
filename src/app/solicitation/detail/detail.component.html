@@ -1,0 +1,221 @@
+<section class="statistic" *ngIf="!loading">
+    <div class="btns-floating">
+
+        <div *ngIf="hasPermissionOfAdm">
+            <button class="btn btn-danger" *ngIf="solicitation.situation === 'opened'" (click)="confirmRefuse()">
+                <fa-icon icon="sync-alt" size="2x"></fa-icon> Recusar
+            </button>
+            <button class="btn btn-success" *ngIf="solicitation.situation === 'opened'" (click)="confirmAccept()">
+                <fa-icon icon="check" size="2x"></fa-icon> Aceitar
+            </button>
+        </div>
+
+        <div *ngIf="!hasPermissionOfAdm">
+            <button class="btn btn-info" (click)="goEdit()" *ngIf="solicitation.situation === 'opened'">
+                <fa-icon icon="pencil-alt" size="2x"></fa-icon> Editar
+            </button>
+            <button class="btn btn-danger" *ngIf="solicitation.situation === 'opened'" (click)="confirmCancel()">
+                <fa-icon icon="ban" size="2x"></fa-icon>
+                Cancelar
+            </button>
+            <button class="btn btn-danger"
+                    *ngIf="solicitation.situation === 'canceled' || solicitation.situation === 'refused'" (click)="confirmDelete()">
+                <fa-icon icon="times" size="2x"></fa-icon> Remover
+            </button>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12">
+        <div *ngIf="noResults; then noresult; else result"></div>
+
+        <ng-template #noresult>
+            <no-result></no-result>
+        </ng-template>
+
+        <ng-template #result>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 mb30">
+                        <div class="au-card">
+                            <div class="au-card-inner card-detail">
+                                <h4>
+                                    <fa-icon icon="info-circle"></fa-icon>
+                                    Detalhes
+                                </h4>
+                                <div class="body-detail">
+                                    <span>Situação:</span>
+                                    <div *ngIf="solicitation.situation == 'opened'">
+                                        <h6 class="text-uppercase text-info">
+                                            Aberta - Aguardando análise.
+                                        </h6>
+                                        <span>Modificado em:</span>
+                                        <h6>{{ solicitation.updatedAt | date }}</h6>
+                                    </div>
+                                    <div *ngIf="solicitation.situation == 'canceled'">
+                                        <h6 class="text-uppercase text-danger">
+                                            Cancelada
+                                        </h6>
+                                        <span>Cancelada em:</span>
+                                        <h6>{{ solicitation.answer_date | date }}</h6>
+                                        <span>Descrição:</span>
+                                        <h6 class="text-justify">
+                                            {{ solicitation.answer_description ? solicitation.answer_description :
+                                            'Nenhuma descrição' }}
+                                        </h6>
+                                    </div>
+                                    <div *ngIf="solicitation.situation == 'refused'">
+                                        <h6 class="text-uppercase text-danger">
+                                            Recusada
+                                        </h6>
+                                        <span>Recusada em:</span>
+                                        <h6>{{ solicitation.answer_date | date }}</h6>
+                                        <span>Descrição:</span>
+                                        <h6>
+                                            {{ solicitation.answer_description ? solicitation.answer_description :
+                                            'Nenhuma descrição' }}
+                                        </h6>
+                                    </div>
+                                    <div *ngIf="solicitation.situation == 'accepted'">
+                                        <h6 class="text-uppercase text-success">
+                                            Aceita
+                                        </h6>
+                                        <span>Aceita em:</span>
+                                        <h6>{{ solicitation.answer_date | date }}</h6>
+                                        <span>Descrição:</span>
+                                        <h6>
+                                            {{ solicitation.answer_description ? solicitation.answer_description :
+                                            'Nenhuma descrição' }}
+                                        </h6>
+                                    </div>
+                                    <div *ngIf="solicitation.observation">
+                                        <span>Observação:</span>
+                                        <h6> {{ solicitation.observation }} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 mb30">
+                        <div class="au-card">
+                            <div class="au-card-inner card-detail">
+                                <h4>
+                                    <fa-icon icon="calendar-alt"></fa-icon>
+                                    Data e Hora
+                                </h4>
+                                <div class="body-detail">
+                                    <span>Data:</span>
+                                    <div *ngIf="solicitation.repeate == 'yes'; then repeate, else norepeate"></div>
+                                    <ng-template #repeate>
+                                        <h6>{{ solicitation.start_date | date }} à {{ solicitation.end_date
+                                            | date }}</h6>
+                                        <span>Repete:</span>
+                                        <h6>
+                                            <span *ngFor="let day of days_week" class="text-success text-uppercase">
+                                                <fa-icon icon="check"></fa-icon>
+                                                {{ day.description }}
+                                            </span>
+                                        </h6>
+                                    </ng-template>
+                                    <ng-template #norepeate>
+                                        <h6>{{ solicitation.start_date | date }}</h6>
+                                    </ng-template>
+                                    <span>Hora:</span>
+                                    <h6>
+                                        {{ solicitation.start_hour }} às {{ solicitation.end_hour }}
+                                    </h6>
+                                    <span>Solicitado em:</span>
+                                    <h6>
+                                        {{ solicitation.createdAt | date }}
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 mb30">
+                        <div class="au-card">
+                            <div class="au-card-inner card-detail">
+                                <h4>
+                                    <fa-icon icon="sitemap"></fa-icon>
+                                    Laboratório
+                                </h4>
+                                <div class="body-detail">
+                                    <span>Nome:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.laboratory.name }}
+                                    </h6>
+                                    <span>Localização:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.laboratory.localization }}
+                                    </h6>
+                                    <span>Situação:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.laboratory.situation }}
+                                    </h6>
+                                    <span>Observação:</span>
+                                    <h6>
+                                        {{ solicitation.laboratory.observation }}
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 mb30">
+                        <div class="au-card">
+                            <div class="au-card-inner card-detail">
+                                <h4>
+                                    <fa-icon icon="user-circle"></fa-icon>
+                                    Professor
+                                </h4>
+                                <div class="body-detail">
+                                    <span>Nome:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.class.instructor.name }} {{
+                                        solicitation.class.instructor.family_name
+                                        }}
+                                    </h6>
+                                    <span>Username:</span>
+                                    <h6>
+                                        {{ solicitation.class.instructor.username }}
+                                    </h6>
+                                    <span>Telefone:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.class.instructor.phone }}
+                                    </h6>
+                                    <span>Sexo:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.class.instructor.gender }}
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 mb30">
+                        <div class="au-card">
+                            <div class="au-card-inner card-detail">
+                                <h4>
+                                    <fa-icon icon="layer-group"></fa-icon>
+                                    Turma
+                                </h4>
+                                <div class="body-detail">
+                                    <span>Código:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.class.code }}
+                                    </h6>
+                                    <span>Nome:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.class.name }}
+                                    </h6>
+                                    <span>Instituição:</span>
+                                    <h6 class="text-uppercase">
+                                        {{ solicitation.class.institution }}
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</section>
+

@@ -1,18 +1,33 @@
 import { Injectable } from '@angular/core';
 
 import { EventsService } from './event.service';
-import { Events } from '../components/events/events';
+import { ToastrService } from 'ngx-toastr';
+import { AuthenticateService } from '../../auth/authenticate.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UtilsService {
 
-    public typeEvent: Events = new Events();
+    constructor(
+        private events: EventsService,
+        private toastr: ToastrService,
+        private auth: AuthenticateService
+    ) { }
 
-    constructor(private events: EventsService) { }
+    public rollbackSuccess(message: string) {
+        this.toastr.success(message, 'Sucesso');
+    }
 
-    public eventAlterHeader(title: string) {
-        this.events.broadcast(this.typeEvent.ALTER_TITLE_HEADER, title);
+    public rollbackError(message: string) {
+        this.toastr.error(message, 'Erro');
+    }
+
+    public alterHeader(title: string, back?: boolean) {
+        this.events.broadcast('_altHeader', title, back ? true : false);
+    }
+
+    public hasPermissionOfAdmin() {
+        return this.auth.getUserAuth().role === 'administrator'
     }
 }

@@ -12,7 +12,7 @@
 
 .header-desktop {
     height: 75px;
-    background: #4272d7;
+    background: #343a40 !important;
     position: fixed;
     z-index: 1001;
     top: 0;
@@ -40,7 +40,6 @@
     }
 }
 
-
 @media (max-width: 991px) {
     .header-desktop {
         left: 0;
@@ -48,28 +47,30 @@
     }
 }
 
-.btn-floating {
-    border-radius: 100%;
-    height: 60px;
-    width: 60px;
+.btns-floating {
     position: fixed;
     float: bottom;
-	bottom: 20px;
-	right: 15px;
+    bottom: 55px;
+    right: 15px;
     z-index: 1001;
+
+    .btn {
+        fa-icon {
+            font-size: 8px;
+        }
+        height: 40px;
+        margin-left: 5px;
+    }
 }
 
-.btn-floating-other {
-    border-radius: 100%;
-    height: 60px;
-    width: 60px;
-    position: fixed;
-    float: bottom;
-	bottom: 20px;
-	right: 90px;
-    z-index: 1001;
+.go_history {
+    margin-right: 10px;
+    font-size: 22px;
 }
 
+.go_history:hover {
+    cursor: pointer;
+}
 
 /* Novos Estilos */
 .table-responsive {
@@ -88,9 +89,9 @@
     }
 
     .table-data thead {
-        background: #4272d7;
+        background: #24a2b8;
     }
-    
+
     .table-data thead tr th {
         color: #fff;
         font-weight: 400;
@@ -98,42 +99,42 @@
         padding: 10px 40px;
         padding-right: 10px;
     }
-    
-    
+
+
     .table-data thead tr th:first-child {
         -webkit-border-top-left-radius: 3px;
         -moz-border-radius-topleft: 3px;
         border-top-left-radius: 3px;
     }
-    
+
     .table-data thead tr th:last-child {
         -webkit-border-top-right-radius: 3px;
         -moz-border-radius-topright: 3px;
         border-top-right-radius: 3px;
     }
-    
+
     .table-data thead tr th:last-child {
         text-align: right;
         padding-right: 50px;
     }
-    
+
     .table-data tbody tr td:last-child {
         text-align: right;
-        padding-right: 50px;
+        padding-right: 30px;
     }
-    
+
     .table-data tbody tr:last-child td:first-child {
         -webkit-border-bottom-left-radius: 8px;
         -moz-border-radius-bottomleft: 8px;
         border-bottom-left-radius: 8px;
     }
-    
+
     .table-data tbody tr:last-child td:last-child {
         -webkit-border-bottom-right-radius: 8px;
         -moz-border-radius-bottomright: 8px;
         border-bottom-right-radius: 8px;
     }
-    
+
     .table-data tbody td {
         border-bottom: 1px solid #f5f5f5;
         background: #fff;
@@ -146,22 +147,17 @@
     .table-data tbody td a {
         font-weight: 500;
     }
-    
+
     .table-data tbody td a:hover {
         color: #4d88e0;
         cursor: pointer;
     }
-    
-    .table-data tbody td.process {
-        color: #00ad5f;
-    }
-    
-    .table-data tbody td.denied {
-        color: #fa4251;
+
+    .table-data tbody tr .roles {
+        font-weight: 500;
     }
 
     .buttons_actions {
-
         .btn-remove, .btn-edit, .btn-resource {
             font-size: 16px;
             padding-bottom: 0;
@@ -173,7 +169,7 @@
         }
 
         .btn-edit {
-            color: #4d88e0;
+            color: #5080b2e0;
         }
 
         .btn-resource {
@@ -183,20 +179,19 @@
 }
 
 .form-group {
-
     .control-label {
         font-size: 15px;
-        text-transform: capitalize;
+        text-transform: none;
         color: #20232b;
         margin-bottom: 8px;
         letter-spacing: 0px;
         font-weight: 400;
     }
-    
+
     textarea.form-control {
         height: 100px;
     }
-    
+
     .form-control, .form-select {
         border-radius: 8px;
         font-size: 14px;
@@ -222,7 +217,7 @@
             cursor: pointer;
         }
     }
-    
+
     .form-control, .form-select:focus {
         color: #121113 !important;
         outline: 0;
@@ -230,12 +225,13 @@
         box-shadow: none;
         border-color: #d6dadf;
     }
-    
+
     .has-error {
         .control-label {
             color: #a94442;
             font-weight: 500;
         }
+
         .form-control, .form-select {
             border-color: #a94442;
         }
@@ -244,6 +240,7 @@
     .card {
         margin-bottom: 16px;
     }
+
     .card-body {
         padding-bottom: 3px;
     }
@@ -254,11 +251,30 @@
     }
 }
 
-form .buttons-actions {
-    text-align: right;
+form {
+    .buttons-actions {
+        text-align: right;
+    }
 
     .btn {
-        margin-left: 10px;
+        border: none;
+        padding: 10px;
+        text-transform: uppercase;
+    }
+
+    .field-required {
+        font-size: 14px;
+        color: #555555;
+    }
+
+    .icon-btn {
+        padding: 2px 12px 3px 12px;
+        border-radius: 50px;
+    }
+
+    .btn-lg {
+        font-size: 16px;
+        padding: 5px;
     }
 }
 
@@ -271,11 +287,72 @@ form .buttons-actions {
 
 .au-card {
 
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     padding: 1.5em;
+
+    .au-card-title {
+        font-size: 20px;
+        line-height: 1.5;
+        margin: 25px 0;
+        font-weight: 400;
+        color: #3c4858;
+    }
+
+    .card-detail {
+        min-height: 240px;
+    }
+
+    .body-detail {
+        margin-top: 15px;
+
+        h5 {
+            color: #4c4c4c;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        h6 {
+            font-weight: 500;
+            color: #333;
+        }
+
+        h6 span {
+            padding-right: 10px;
+        }
+
+        span {
+            font-size: 15px;
+            color: #777;
+        }
+    }
 
     button {
         border: none;
+        text-transform: uppercase;
+    }
+}
+
+.ngx-modal {
+    .ngx-modal-title {
+        font-weight: 600;
+        margin-bottom: 30px;
+    }
+
+    .ngx-modal-body {
+        color: #333;
+
+        h6 {
+            margin-bottom: 30px;
+        }
+
+        form .form-group textarea {
+            height: 80px;
+        }
+
+        form .form-group .btn-outline-success, .btn-outline-danger {
+            font-weight: 500;
+            text-transform: capitalize;
+        }
     }
 }
 

@@ -5,11 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule, TabsModule } from 'ngx-bootstrap';
+import { NgxCoolDialogsModule } from 'ngx-cool-dialogs';
 
 // Sign-in
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
@@ -31,8 +32,12 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MenuComponent } from './layout/menu/menu.component';
 import { OccupationMapComponent } from './occupation-map/occupation-map.component';
-import { SigninComponent } from './signin/signin.component';
 import { DetailComponent } from './occupation-map/detail/detail.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+
+// Interceptor Service
+import { InterceptService } from './shared/services/custom/intercept.service';
 
 import * as $ from 'jquery';
 
@@ -45,7 +50,9 @@ import {
     faMapMarkedAlt,
     faBell,
     faCalendarAlt,
-    faLayerGroup
+    faLayerGroup,
+    faChevronLeft,
+    faBars
 } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -59,7 +66,9 @@ library.add(
     faMapMarkedAlt,
     faBell,
     faCalendarAlt,
-    faLayerGroup
+    faLayerGroup,
+    faChevronLeft,
+    faBars
 );
 
 const config = new AuthServiceConfig([
@@ -82,8 +91,9 @@ export function provideConfig() {
         NavbarComponent,
         FooterComponent,
         OccupationMapComponent,
-        SigninComponent,
-        DetailComponent
+        DetailComponent,
+        AuthComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
@@ -97,11 +107,10 @@ export function provideConfig() {
             preventDuplicates: false,
             progressBar: true,
             progressAnimation: 'increasing',
-            timeOut: 2000,
-            positionClass: 'toast-bottom-center',
+            timeOut: 2000
         }),
         ModalModule.forRoot(),
-
+        TabsModule.forRoot(),
         ReactiveFormsModule,
         SocialLoginModule,
         UserModule,
@@ -109,13 +118,26 @@ export function provideConfig() {
         SolicitationModule,
         ReservationModule,
         ClassModule,
-        SharedModule
-        //NgbModule
+        SharedModule,
+        NgxCoolDialogsModule.forRoot({
+            theme: 'default',
+            okButtonText: 'Sim',
+            cancelButtonText: 'Não',
+            color: 'rgb(210, 80, 80)',
+            titles: {
+                confirm: 'Confirmação!'
+            }
+        })
     ],
     providers: [
         {
             provide: AuthServiceConfig,
             useFactory: provideConfig
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: InterceptService,
+            multi: true
         }
     ],
     bootstrap: [AppComponent]
