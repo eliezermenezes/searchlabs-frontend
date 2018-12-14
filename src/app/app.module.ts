@@ -5,14 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ModalModule, TabsModule } from 'ngx-bootstrap';
+import { NgxCoolDialogsModule } from 'ngx-cool-dialogs';
 
+// Sign-in
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider } from "angularx-social-login";
+
+// Modules
 import { UserModule } from './user/user.module';
 import { LaboratoryModule } from './laboratory/laboratory.module';
 import { SolicitationModule } from './solicitation/solicitation.module';
 import { ReservationModule } from './reservation/reservation.module';
+import { ClassModule } from './class/class.module';
+import { SharedModule } from './shared/shared.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -22,6 +32,14 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MenuComponent } from './layout/menu/menu.component';
 import { OccupationMapComponent } from './occupation-map/occupation-map.component';
+import { DetailComponent } from './occupation-map/detail/detail.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+
+// Interceptor Service
+import { InterceptService } from './shared/services/custom/intercept.service';
+
+import * as $ from 'jquery';
 
 import {
     faTachometerAlt,
@@ -31,7 +49,10 @@ import {
     faSitemap,
     faMapMarkedAlt,
     faBell,
-    faCalendarAlt
+    faCalendarAlt,
+    faLayerGroup,
+    faChevronLeft,
+    faBars
 } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -44,11 +65,22 @@ library.add(
     faSitemap,
     faMapMarkedAlt,
     faBell,
-    faCalendarAlt
-    );
+    faCalendarAlt,
+    faLayerGroup,
+    faChevronLeft,
+    faBars
+);
 
-import * as $ from 'jquery';
-import { LoginComponent } from './login/login.component';
+const config = new AuthServiceConfig([
+    {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider('700230342978-uai9re9k768n2fdalf19qivqvgl3fmd3.apps.googleusercontent.com')
+    }
+]);
+
+export function provideConfig() {
+    return config;
+}
 
 @NgModule({
     declarations: [
@@ -59,6 +91,8 @@ import { LoginComponent } from './login/login.component';
         NavbarComponent,
         FooterComponent,
         OccupationMapComponent,
+        DetailComponent,
+        AuthComponent,
         LoginComponent
     ],
     imports: [
@@ -72,14 +106,40 @@ import { LoginComponent } from './login/login.component';
         ToastrModule.forRoot({
             preventDuplicates: false,
             progressBar: true,
-            progressAnimation: 'increasing'
+            progressAnimation: 'increasing',
+            timeOut: 5000
         }),
+        ModalModule.forRoot(),
+        TabsModule.forRoot(),
+        ReactiveFormsModule,
+        SocialLoginModule,
         UserModule,
         LaboratoryModule,
         SolicitationModule,
-        ReservationModule
+        ReservationModule,
+        ClassModule,
+        SharedModule,
+        NgxCoolDialogsModule.forRoot({
+            theme: 'default',
+            okButtonText: 'Sim',
+            cancelButtonText: 'Não',
+            color: 'rgb(210, 80, 80)',
+            titles: {
+                confirm: 'Confirmação!'
+            }
+        })
     ],
-    providers: [],
+    providers: [
+        {
+            provide: AuthServiceConfig,
+            useFactory: provideConfig
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: InterceptService,
+            multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

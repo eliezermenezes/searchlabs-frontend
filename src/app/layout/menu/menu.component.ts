@@ -12,7 +12,7 @@ export class MenuComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        this.logo = '../assets/img/searchlabs-logo.png';
+        this.logo = '../assets/img/logo.png';
     }
 
 }

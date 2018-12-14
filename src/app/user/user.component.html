@@ -1,70 +1,55 @@
 <section class="statistic">
-    <div class="section__content section__content--p30">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-primary btn-floating" (click)="addUser()">
-                        <fa-icon icon='user-plus' size='2x'></fa-icon>
-                    </button>
-                </div>
-                <div class="col-md-12">
-                    <div class="user-data" *ngIf="!noResults">
-                        <div class="table-responsive table-data">
-                            <table class="table">
-                                <thead class="__header">
-                                    <tr>
-                                        <td>Nome</td>
-                                        <td>Sexo</td>
-                                        <td>N° celular</td>
-                                        <td>Perfil</td>
-                                        <td>Aniversário</td>
-                                        <td>Data de Cadastro</td>
-                                        <td>ações </td>
-                                    </tr>
-                                </thead>
-                                <tbody class="__body" *ngIf="!noResults">
-                                    <tr *ngFor="let user of users; let num = index">
-                                        <td>
-                                            <h5 class="__data">{{ user.name }} {{ user.family_name }}</h5>
-                                            <span class="__info">
-                                                {{ user.username }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data"> {{ user.gender }} </h5>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data"> {{ user.phone }} </h5>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data "> {{ user.role }} </h5>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data"> {{ user.birthday | date:'dd/MM/yyyy' }} </h5>
-                                        </td>
-                                        <td>
-                                            <h5 class="__data"> {{ user.createdAt | date:'dd/MM/yyyy' }} </h5>
-                                        </td>
-                                        <td>
-                                            <div class="__buttons">
-                                                <button type="button" class="btn btn-outline-success">
-                                                    <fa-icon icon='user-edit'></fa-icon> Editar
-                                                </button>
-                                                <button type="button" class="btn btn-outline-danger">
-                                                    <fa-icon icon='user-times'></fa-icon> Remover
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div *ngIf="noResults">
-                        <no-result></no-result>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="btns-floating">
+        <button class="btn btn-info" [routerLink]="['/users/add']">
+            <fa-icon icon='user-plus' size='2x'></fa-icon> Adicionar
+        </button>
     </div>
 </section>
+
+<div class="container">
+    <div *ngIf="noResults; then noresults; else results"></div>
+
+    <ng-template #noresults>
+        <no-result></no-result>
+    </ng-template>
+
+    <ng-template #results>
+        <div class="table-responsive">
+            <table class="table table-borderless table-data">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Username</th>
+                    <th>Telefone</th>
+                    <th>Perfil</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of users">
+                    <td>
+                        <a (click)="goDetail(user)">
+                            {{ user.name }} {{ user.family_name }}
+                        </a>
+                    </td>
+                    <td> {{ user.username }} </td>
+                    <td> {{ user.phone }} </td>
+                    <td class="roles">
+                            <span *ngIf="user.role == 'administrator'" class="text-success">
+                                Administrador
+                            </span>
+                        <span *ngIf="user.role == 'teacher'" class="text-info">
+                                Professor
+                            </span>
+                    </td>
+                    <td class="buttons_actions">
+                        <button class="btn btn-edit" (click)="goDetail(user)">
+                            <fa-icon icon="chevron-right"></fa-icon>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-template>
+</div>

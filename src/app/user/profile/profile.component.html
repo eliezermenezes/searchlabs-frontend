@@ -1,0 +1,80 @@
+<section class="statistic" *ngIf="!loading">
+    <div class="container">
+        <div class="col-xl-6 offset-lg-3 col-lg-12 col-12 mb30">
+            <div class="au-card">
+                <div class="body-detail mt-3">
+                    <span class="mt-5">
+                        Nome Completo:
+                    </span>
+                    <h5>
+                        {{ user.name }} {{ user.family_name }}
+                    </h5>
+
+                    <span class="mt-5">
+                        E-mail:
+                    </span>
+                    <h5 class="text-lowercase">
+                        {{ user.username }}
+                    </h5>
+
+                    <span class="mt-5">
+                        Perfil:
+                    </span>
+                    <h5 class="text-success" *ngIf="user.role == 'administrator'">
+                        Administrador
+                    </h5>
+                    <h5 class="text-info" *ngIf="user.role == 'teacher'">
+                        Professor
+                    </h5>
+
+                    <span class="mt-5">
+                        N° Telefone:
+                    </span>
+                    <h5>
+                        {{ user.phone ? user.phone : 'Não informado' }}
+                    </h5>
+
+                    <span class="mt-5">
+                        Sexo:
+                    </span>
+                    <div *ngIf="user.gender; then gender, else nogender"></div>
+                    <ng-template #gender>
+                        <h5>
+                            {{ user.gender === 'male' ? 'Masculino' : 'Feminino' }}
+                        </h5>
+                    </ng-template>
+                    <ng-template #nogender>
+                        <h5>
+                            Não informado
+                        </h5>
+                    </ng-template>
+
+                    <span class="mt-5">
+                        Cadastrado em:
+                    </span>
+                    <h5>
+                        {{ user.createdAt | date:'fullDate' }}
+                    </h5>
+
+                    <span class="mt-5">
+                        Modificado em:
+                    </span>
+                    <h5>
+                        {{ user.updatedAt | date:'fullDate' }}
+                    </h5>
+                    <hr>
+                    <div class="text-center">
+                        <button class="btn btn-outline-danger" (click)="confirmDelete()">
+                            <fa-icon icon="times"></fa-icon>
+                            Excluir Conta
+                        </button>
+                        <button type="button" class="btn btn-outline-info" (click)="goEdit()">
+                            <fa-icon icon="pencil-alt"></fa-icon>
+                            Editar Perfil
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

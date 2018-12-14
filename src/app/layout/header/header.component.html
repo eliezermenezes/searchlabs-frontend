@@ -6,11 +6,12 @@
                     <img [src]="logo" alt="Logo Searchlas">
                 </div>
                 <div class="header-button2">
-                    <div class="header-button-item js-item-menu">
+                    <div class="header-button-item js-item-menu" (click)="goProfile()">
+                        <span class="user-logged">{{ userLogged.name }}</span>
                         <fa-icon icon="user-circle"></fa-icon>
                     </div>
                     <div class="header-button-item mr-0 js-sidebar-btn">
-                        <fa-icon icon="sign-out-alt"></fa-icon>
+                        <fa-icon icon="sign-out-alt" (click)="doLogout()"></fa-icon>
                     </div>
                 </div>
             </div>
@@ -24,8 +25,11 @@
             <img [src]="logo" alt="Logo Searchlabs">
         </a>
     </div>
+    <div class="header-button-item mr-0 js-sidebar-btn">
+        <i class="zmdi zmdi-menu"></i>
+    </div>
     <div class="menu-sidebar2__content js-scrollbar2">
-        <menu-navbar></menu-navbar>
+        <menu-navbar checkRole=true></menu-navbar>
     </div>
 </aside>
 
@@ -36,7 +40,9 @@
                 <div class="col-md-12">
                     <div class="au-breadcrumb-content">
                         <div class="au-breadcrumb-left">
-                            <h3 class="title--sbold text-muted"> {{ titleHeader }} </h3>
+                            <h3 class="title--sbold text-muted">
+                                <a [hidden]="!showBack" (click)="comeBack()" class="go_history"><fa-icon icon="chevron-left"></fa-icon></a> {{ title }}
+                            </h3>
                         </div>
                     </div>
                 </div>

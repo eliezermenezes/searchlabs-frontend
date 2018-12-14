@@ -1,0 +1,79 @@
+h3 {
+    font-size: 20px;
+    line-height: 1.5;
+    margin: 10px 0;
+    font-weight: 400;
+    color: #3c4858;
+}
+
+.btn {
+    padding: 12px 15px !important;
+}
+
+.btn fa-icon {
+    position: relative;
+    display: inline-block;
+    margin-top: -1.8em;
+    margin-bottom: -0.5em;
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+
+.btn.btn-just-icon.btn-sm {
+    height: 30px;
+    min-width: 30px;
+    width: 30px;
+}
+
+.btn.btn-link {
+    background: transparent;
+    box-shadow: none;
+    color: #999;
+}
+
+.btn.btn-info.btn-link {
+    background-color: transparent !important;
+    color: #00bcd4 !important;
+    box-shadow: none !important;
+}
+
+.btn.btn-danger.btn-link {
+    background-color: transparent !important;
+    color: #f44336 !important;
+    box-shadow: none !important;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+}
+
+.table thead tr th {
+    font-size: 15px;
+}
+
+.table > thead > tr > th {
+    padding: 12px 8px;
+    vertical-align: middle;
+    border-color: #ddd;
+    font-weight: 500;
+}
+
+.table > tbody > tr > td {
+    padding: 12px 8px;
+    vertical-align: middle;
+    border-color: #ddd;
+    font-weight: 400;
+    font-size: 14px;
+    color: #3c4858;
+}
+
+.table .td-actions .btn {
+    margin: 0;
+    padding: 5px;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f9f9f9 !important;
+}

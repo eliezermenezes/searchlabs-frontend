@@ -1,47 +1,58 @@
 <section class="statistic">
-    <div class="section__content section__content--p30">
-        <div class="row">
-            <div class="col-md-12">
-                <button class="btn btn-primary btn-floating" (click)="addLaboratory()">
-                    <fa-icon icon='plus' size='2x'></fa-icon>
-                </button>
-            </div>
-        </div>
-        <div class="container">
-            <div class="table-responsive">
-                <table class="table table-card">
-                    <thead class="__thead">
-                        <tr>
-                            <th> Nome </th>
-                            <th> Localização </th>
-                            <th> Data de cadastro </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody class="__tbody">
-                        <tr class="_tr__shadow" *ngFor="let lab of laboratories; let num = index">
-                            <td> {{ lab.name | uppercase }} </td>
-                            <td>
-                                {{ lab.localization | uppercase }}
-                            </td>
-                            <td>
-                                {{ lab.createdAt | date: 'dd/MM/yyyy' }}
-                            </td>
-                            <td>
-                                <div class="__buttons">
-                                    <button type="button" class="btn btn-outline-success" (click)="editLaboratory(lab)">
-                                        Editar
-                                    </button>
-                                    <button type="button" class="btn btn-outline-danger">
-                                        Remover
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="spacer"></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="btns-floating" *ngIf="hasPermissionOfAdmin">
+        <button class="btn btn-info" [routerLink]="['/laboratories/add']">
+            <fa-icon icon='plus' size='2x'></fa-icon>
+            Adicionar
+        </button>
     </div>
 </section>
+
+<div class="col-xl-6 col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12 mb30">
+    <div *ngIf="noResults; then noresults; else results"></div>
+
+    <ng-template #noresults>
+        <no-result></no-result>
+    </ng-template>
+    <ng-template #results>
+        <div class="table-responsive">
+            <table class="table table-borderless table-data">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Localização</th>
+                    <th>Situação</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let laboratory of laboratories">
+                    <td>
+                        <a (click)="goDetail(laboratory)">
+                            {{ laboratory.name }}
+                        </a>
+                    </td>
+                    <td> {{ laboratory.localization }} </td>
+                    <td>
+                        <div *ngIf="laboratory.situation === 'ok'; then regular, else maintenance"></div>
+                        <ng-template #regular>
+                                <span class="text-success">
+                                    <fa-icon icon="check"></fa-icon> Regular
+                                </span>
+                        </ng-template>
+                        <ng-template #maintenance>
+                                <span class="text-info">
+                                    <fa-icon icon="cogs"></fa-icon> Em manutenção
+                                </span>
+                        </ng-template>
+                    </td>
+                    <td class="buttons_actions">
+                        <button class="btn btn-edit" (click)="goDetail(laboratory)">
+                            <fa-icon icon="chevron-right"></fa-icon>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,53 @@
+<!--div *ngIf="!user" class="card text-center">
+    <h6 class="card-header">
+        Social Login Demo
+    </h6>
+    <div class="card-block">
+        <h4 class="card-title">Not signed in</h4>
+        <p class="card-text">Sign in with</p>
+    </div>
+    <div class="card-block">
+        <button class="btn btn-primary" (click)="signInWithGoogle()">
+            Entrar com Google
+        </button>
+    </div>
+</div>
+<div *ngIf="user" class="card text-center">
+    <h6 class="card-header">
+        Social Login Demo
+    </h6>
+    <div class="card-block"></div>
+    <img class="card-img-top img-responsive photo" src="{{ user.photoUrl }}">
+    <div class="card-block">
+        <h4 class="card-title">{{ user.name }}</h4>
+        <p class="card-text">{{ user.email }}</p>
+    </div>
+    <div class="card-block">
+        <button class="btn btn-danger" (click)="signOut()">Sign out</button>
+    </div>
+</div-->
+
+
+<section class="login-block">
+    <div class="container">
+        <div class="col-lg-4 offset-lg-4 login-sec">
+            <img [src]="logo" alt="">
+            <h6 class="text-muted mb-5 text-uppercase">Sistema de reserva de laboratórios</h6>
+            <div class="login-banner">
+                <h2 class="text-center">
+                    Login
+                </h2>
+                <h3 *ngIf="userNotFound">
+                    {{ errorLogin }}
+                </h3>
+                <div class="text-center text-muted">
+                    <button class="btn btn-social btn-info" (click)="signInWithGoogle()">
+                        Entrar com Google
+                    </button>
+                </div>
+                <div class="copy-text text-secondary"> Desenvolvido por <span
+                    class="text-uppercase"> Eliezer Menezes </span></div>
+            </div>
+        </div>
+    </div>
+</section>

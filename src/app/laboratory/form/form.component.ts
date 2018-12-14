@@ -1,39 +1,115 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { Laboratory } from './../../shared/models/laboratory.model';
-import { Resource } from 'src/app/shared/models/resource.model';
+import { FormBuilder } from '@angular/forms';
+import { LaboratoryService } from '../laboratory.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { BaseFormComponent } from 'src/app/shared/components/base-form/base-form.component';
+import { MessageRequest } from '../../shared/components/confirm/message-request';
 
 @Component({
     selector: 'app-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss']
+    styleUrls: ['./form.component.scss'],
+    providers: [LaboratoryService]
 })
-export class FormComponent implements OnInit {
+export class FormComponent extends BaseFormComponent implements OnInit {
 
     public laboratory: Laboratory;
-    public resources: Resource[];
-    public resource: Resource;
+    public titlePage: string = 'Laboratório';
+    public msg: MessageRequest = new MessageRequest();
 
     constructor(
-        private utilsService: UtilsService
-    ) { }
+        private utils: UtilsService,
+        private formBuilder: FormBuilder,
+        private laboratoryService: LaboratoryService,
+        private router: Router,
+        protected routerActive: ActivatedRoute
+    ) {
+        super(routerActive);
+    }
 
-    ngOnInit() {
+    async ngOnInit() {
 
+        this.loading = true;
         this.laboratory = new Laboratory();
-        this.resource = new Resource();
-        this.resources = new Array<Resource>();
+        this.verifyEditMode();
+        this.utils.alterHeader((this.isEditMode ? 'Alterar ' : 'Novo ') + this.titlePage, true);
 
-        this.utilsService.eventAlterHeader('Cadastrar laboratório');
+        await this.defineDataFormGroup();
+        this.loading = false;
     }
 
-    public addResource(form) {
-        this.resources.push(form.value);
+    public async defineDataFormGroup(laboratory?: Laboratory) {
+
+        let dataForm = {
+            name: laboratory ? laboratory.name : null,
+            localization: laboratory ? laboratory.localization : null,
+            observation: laboratory ? laboratory.observation : null
+        };
+
+        await this.createFormGroup(dataForm);
     }
 
-    public removerRes(res: Resource) {
-        this.resources.splice(this.resources.indexOf(res), 1);
-        console.log(this.resources);
+    private async createFormGroup(dataForm: any) {
+
+        this.formulario = await this.formBuilder.group({
+            name: [dataForm.name, this.required()],
+            localization: [dataForm.localization],
+            observation: [dataForm.observation]
+        });
     }
 
+    public async get(id: number) {
+        try {
+            let laboratory = await this.laboratoryService.getById(id);
+            if (laboratory) {
+                this.laboratory = laboratory;
+                await this.defineDataFormGroup(this.laboratory);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    protected async submit() {
+
+        let valuesSubmit = Object.assign({}, this.formulario.value);
+
+        if (this.isEditMode) {
+            await this.update(valuesSubmit);
+        } else {
+            await this.save(valuesSubmit);
+        }
+    }
+
+    public async save(valuesSubmit: Laboratory) {
+        try {
+            const labCreated = await this.laboratoryService.create(valuesSubmit);
+            if (labCreated) {
+                this.router.navigate(['laboratories']);
+                this.utils.rollbackSuccess(this.msg.create_lab);
+            } else {
+                this.utils.rollbackError(this.msg.create_error);
+            }
+        } catch (e) {
+            console.log(e);
+            this.utils.rollbackError(this.msg.error_request);
+        }
+    }
+
+    public async update(valuesSubmit: Laboratory) {
+        try {
+            const labUpdated = await this.laboratoryService.update(this.laboratory.id, valuesSubmit);
+            if (labUpdated) {
+                this.router.navigate(['laboratories']);
+                this.utils.rollbackSuccess(this.msg.updated_lab);
+            } else {
+                this.utils.rollbackError(this.msg.alter_error);
+            }
+        } catch (e) {
+            console.log(e);
+            this.utils.rollbackError(this.msg.error_request);
+        }
+    }
 }

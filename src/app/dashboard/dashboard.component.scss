@@ -1,0 +1,35 @@
+.au-card-inner {
+
+    img {
+        margin: -50px;
+    }
+
+    h5 {
+        color: #464543;
+        font-weight: 500;
+    }
+
+    p {
+        color: #464543;
+    }
+}
+
+.open {
+    padding: 0;
+
+    table {
+        margin-top: 15px;
+        margin-bottom: 0;
+        font-size: 15px;
+        color: #535250;
+    }
+
+    thead tr th:last-child {
+        text-align: right;
+    }
+
+    tbody tr td:last-child {
+        text-align: right;
+        padding-right: 30px;
+    }
+}

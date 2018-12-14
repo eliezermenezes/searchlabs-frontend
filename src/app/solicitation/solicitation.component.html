@@ -1,0 +1,60 @@
+<section class="statistic">
+    <div class="btns-floating" *ngIf="hasPermTeacher">
+        <button class="btn btn-info btn-floating" [routerLink]="['/solicitations/register']">
+            <fa-icon icon="plus" size="2x"></fa-icon> Adicionar
+        </button>
+    </div>
+</section>
+
+<div class="container">
+    <div *ngIf="noResults; then noresults; else results"></div>
+
+    <ng-template #noresults>
+        <no-result></no-result>
+    </ng-template>
+
+    <ng-template #results>
+        <div class="table-responsive">
+            <table class="table table-borderless table-data">
+                <thead>
+                <tr>
+                    <th>Laboratório</th>
+                    <th>Professor</th>
+                    <th>Turma</th>
+                    <th>Situação</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let solicitation of solicitations; let num = index">
+                    <td>
+                        <a (click)="goDetail(solicitation)">{{ solicitation.laboratory.name }}</a>
+                    </td>
+                    <td> {{ solicitation.class.instructor.name }} {{ solicitation.class.instructor.family_name }}
+                    </td>
+                    <td> {{ solicitation.class.name }} </td>
+                    <td>
+                            <span class="text-info" *ngIf="solicitation.situation == 'opened'">
+                                Aguardando análise
+                            </span>
+                        <span class="text-success" *ngIf="solicitation.situation == 'accepted'">
+                                Aceita
+                            </span>
+                        <span class="text-danger" *ngIf="solicitation.situation == 'refused'">
+                                Recusada
+                            </span>
+                        <span class="text-dark" *ngIf="solicitation.situation == 'canceled'">
+                                Cancelada
+                            </span>
+                    </td>
+                    <td class="buttons_actions">
+                        <button class="btn btn-edit" (click)="goDetail(solicitation)">
+                            <fa-icon icon="chevron-right"></fa-icon>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-template>
+</div>

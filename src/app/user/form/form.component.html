@@ -1,0 +1,128 @@
+<section class="statistic" *ngIf="!loading">
+    <div class="container">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="au-card">
+                <div class="au-card-title">
+                    <div *ngIf="isEditMode">
+                        <fa-icon icon="user-edit"></fa-icon>
+                        Alterar meus dados cadastrais.
+                    </div>
+                    <div *ngIf="!isEditMode">
+                        <fa-icon icon="user-plus"></fa-icon>
+                        Cadastre um novo usuário.
+                    </div>
+                </div>
+                <div class="au-card-inner">
+                    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+                        <div class="form-row">
+                            <div class="col-lg-12" *ngIf="!isEditMode">
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('role')">
+                                        <label class="control-label" for="role"> Perfil de Usuário
+                                            <field-required></field-required>
+                                        </label>
+
+                                        <select id="role" class="custom-select form-select" formControlName="role"
+                                                [compareWith]="compareRoles">
+                                            <option *ngFor="let role of roles" [ngValue]="role">
+                                                {{role.desc }}
+                                            </option>
+                                        </select>
+                                        <error-required [showError]="verifyFieldTouched('role')"
+                                                        messageError="Selecione um perfil de acesso."></error-required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('username')">
+
+                                        <label for="username" class="control-label"> E-mail do Google
+                                            <field-required></field-required>
+                                        </label>
+                                        <input type="text" class="form-control" id="username"
+                                               formControlName="username"
+                                               placeholder="E-mail do Google">
+                                        <error-required
+                                            [showError]="verifyFieldTouched('username') && formulario.get('username').errors.required"
+                                            messageError="Informe o email."></error-required>
+
+                                        <error-required
+                                            [showError]="verifyFieldTouched('username') && formulario.get('username').errors.email"
+                                            messageError="Informe um email válido."></error-required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" *ngIf="isEditMode">
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('name')">
+
+                                        <label for="name" class="control-label"> Nome
+                                            <field-required></field-required>
+                                        </label>
+                                        <input type="text" class="form-control" id="name"
+                                               formControlName="name"
+                                               placeholder="Primeiro nome">
+                                        <error-required [showError]="verifyFieldTouched('name')"
+                                                        messageError="Informe o nome."></error-required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('family_name')">
+
+                                        <label for="family_name" class="control-label"> Sobrenome
+                                            <field-required></field-required>
+                                        </label>
+                                        <input type="text" class="form-control" id="family_name"
+                                               formControlName="family_name"
+                                               placeholder="Sobrenome">
+                                        <error-required [showError]="verifyFieldTouched('family_name')"
+                                                        messageError="Informe o sobrenome."></error-required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('phone')">
+
+                                        <label for="phone" class="control-label"> Número de Telefone</label>
+                                        <input type="text" class="form-control" id="phone"
+                                               formControlName="phone"
+                                               placeholder="N° de telefone">
+                                        <error-required [showError]="verifyFieldTouched('phone')"
+                                                        messageError="Informe um telefone no formato: 92 9 9999-9999"></error-required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div [ngClass]="applyStyles('gender')">
+                                        <label class="control-label" for="gender"> Sexo </label>
+
+                                        <select id="gender" class="custom-select form-select" formControlName="gender"
+                                                [compareWith]="compareGenders">
+                                            <option *ngFor="let gender of genders" [ngValue]="gender">
+                                                {{ gender.desc }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-md-12 mb-3">
+                                <button class="btn btn-primary icon-btn btn-block btn-lg" type="submit">
+                                    <fa-icon icon="check"></fa-icon>
+                                    Salvar
+                                </button>
+                            </div>
+                            <div class="col-xl-12 col-md-12">
+                                <div class="field-required">
+                                    <em>
+                                        <field-required></field-required>
+                                    </em> Preenchimento obrigatório.
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

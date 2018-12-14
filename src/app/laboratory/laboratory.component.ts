@@ -15,23 +15,25 @@ export class LaboratoryComponent implements OnInit {
     public laboratories: Laboratory[];
     public noResults: boolean;
 
+    public hasPermissionOfAdmin: boolean;
+
     constructor(
-        private utilsService: UtilsService,
+        private utils: UtilsService,
         private laboratoryService: LaboratoryService,
         private router: Router
     ) { }
 
     ngOnInit() {
-        this.utilsService.eventAlterHeader('Laboratórios');
-
+        this.utils.alterHeader('Laboratórios de Informática');
         this.laboratories = new Array<Laboratory>();
+        this.verifyPermission();
         this.listLaboratories();
     }
 
     public async listLaboratories() {
         try {
             const laboratories = await this.laboratoryService.list();
-            if(laboratories.length > 0) {
+            if (laboratories.length > 0) {
                 this.laboratories = laboratories;
             } else {
                 this.noResults = true;
@@ -42,11 +44,11 @@ export class LaboratoryComponent implements OnInit {
         }
     }
 
-    public addLaboratory() {
-        this.router.navigate(['laboratories/add']);
+    public goDetail(laboratory: Laboratory) {
+        this.router.navigate(['laboratories/' + laboratory.id + '/detail']);
     }
 
-    public editLaboratory(laboratory: Laboratory) {
-        this.router.navigate(['laboratories/' + laboratory.id + '/editar']);
+    public verifyPermission() {
+        this.hasPermissionOfAdmin = this.utils.hasPermissionOfAdmin();
     }
 }

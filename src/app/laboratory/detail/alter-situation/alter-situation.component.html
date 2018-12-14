@@ -1,0 +1,27 @@
+<div *ngIf="!loading">
+    <h3 class="text-center">Alterar situação do laboratório</h3>
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <div class="form-group">
+                    <label for="situation" class="control-label text-uppercase"> Selecione uma situação: </label>
+                    <select id="situation" class="custom-select form-select text-uppercase" formControlName="situation"
+                            [compareWith]="compare">
+                        <option *ngFor="let situation of situations" [ngValue]="situation">
+                            {{situation.desc }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary icon-btn btn-block btn-lg">
+                    <fa-icon icon="check"></fa-icon>
+                    Salvar
+                </button>
+                <button class="btn btn-light icon-btn btn-block btn-lg" type="button" (click)="cancel()">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

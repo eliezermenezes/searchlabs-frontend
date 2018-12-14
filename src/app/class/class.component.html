@@ -1,0 +1,46 @@
+<section class="statistic">
+    <div class="btns-floating" *ngIf="!hasPermissionOfAdmin">
+        <button class="btn btn-info btn-floating" [routerLink]="['/classes/add']">
+            <fa-icon icon='plus' size='2x'></fa-icon> Adicionar
+        </button>
+    </div>
+</section>
+
+<div class="col-xl-6 col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12 mb30">
+    <div *ngIf="noResults; then noresults; else results"></div>
+
+    <ng-template #noresults>
+        <no-result></no-result>
+    </ng-template>
+
+    <ng-template #results>
+        <div class="table-responsive">
+            <table class="table table-borderless table-data">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Código</th>
+                    <th>Instituição</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let classe of classes">
+                    <td>
+                        <a (click)="goDetail(classe)">
+                            {{ classe.name }}
+                        </a>
+                    </td>
+                    <td> {{ classe.code }} </td>
+                    <td> {{ classe.institution }} </td>
+                    <td class="buttons_actions">
+                        <button class="btn btn-edit" (click)="goDetail(classe)">
+                            <fa-icon icon="chevron-right"></fa-icon>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-template>
+</div>

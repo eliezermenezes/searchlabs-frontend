@@ -1,0 +1,37 @@
+<div class="topics-form">
+    <h3 class="title-2 tm-b-5">
+        <div *ngIf="!isFormEdit; then new, else edit"></div>
+        <ng-template #new>
+            <fa-icon icon="plus"></fa-icon>
+            Novo Assunto
+        </ng-template>
+
+        <ng-template #edit>
+            <fa-icon icon="pencil-alt"></fa-icon>
+            Editar Assunto
+        </ng-template>
+    </h3>
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="description">
+                    Descrição:
+                    <field-required></field-required>
+                </label>
+                <input type="text" class="form-control" id="description" placeholder="Descrição"
+                       formControlName="description">
+            </div>
+            <div class="col-md-12">
+                <div class="buttons-actions">
+                    <button class="btn icon-btn btn-danger" *ngIf="isFormEdit" (click)="rollbackTopics()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn icon-btn btn-primary" [disabled]="!formulario.valid">
+                        <fa-icon icon="check"></fa-icon>
+                        {{ isFormEdit ? 'Salvar' : 'Cadastrar' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
