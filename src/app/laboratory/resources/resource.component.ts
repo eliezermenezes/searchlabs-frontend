@@ -86,7 +86,7 @@ export class ResourceComponent implements OnInit, OnDestroy {
         try {
             const resourceDeleted = await this.resourceService.delete(resource.id);
             if (resourceDeleted) {
-                this.utils.rollbackSuccess(this.msg.delete_success);
+                this.utils.rollbackSuccess(this.msg.deleted_item);
                 this.getResources();
             } else {
                 this.utils.rollbackError(this.msg.delete_error);

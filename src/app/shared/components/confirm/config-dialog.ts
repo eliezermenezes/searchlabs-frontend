@@ -1,9 +1,13 @@
 export class ConfigDialog {
 
-    public justify_answer = 'Use o campo abaixo para justificar a resposta:';
-    public justify_cancel = 'Use o campo abaixo para justificar o cancelamento:';
-    public msg_confirm = 'Deseja realmente excluir este item?';
-    public msg_des_account = 'Deseja realmente desativar sua conta?';
+    public confirm_delete_account = 'Deseja realmente remover sua conta?';
+    public confirm_delete_item = 'Deseja realmente remover este item?';
+    public confirm_cancel = 'Deseja realmente cancelar esta solicitação?';
+    public confirm_accept = 'Deseja realmente aprovar esta solicitação?';
+    public confirm_refuse = 'Deseja realmente recusar esta solicitação?';
+
+    public justify_answer = 'Justifique sua resposta:';
+    public justify_cancel = 'Justifique o motivo do cancelamento:';
     public confirm_logout = 'Deseja realmente sair do sistema?';
 
     public accept = {

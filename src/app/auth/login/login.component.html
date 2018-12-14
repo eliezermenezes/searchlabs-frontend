@@ -30,20 +30,23 @@
 
 <section class="login-block">
     <div class="container">
-        <div class="col-md-4 offset-md-4 login-sec">
+        <div class="col-lg-4 offset-lg-4 login-sec">
+            <img [src]="logo" alt="">
+            <h6 class="text-muted mb-5 text-uppercase">Sistema de reserva de laboratórios</h6>
             <div class="login-banner">
-                <h2 class="text-center text-uppercase">
-                    Search Labs
+                <h2 class="text-center">
+                    Login
                 </h2>
                 <h3 *ngIf="userNotFound">
                     {{ errorLogin }}
                 </h3>
-                <div class="text-center">
-                    <button class="btn btn-social" (click)="signInWithGoogle()">
+                <div class="text-center text-muted">
+                    <button class="btn btn-social btn-info" (click)="signInWithGoogle()">
                         Entrar com Google
                     </button>
                 </div>
-                <div class="copy-text"> Desenvolvido por <span> Eliezer Menezes </span></div>
+                <div class="copy-text text-secondary"> Desenvolvido por <span
+                    class="text-uppercase"> Eliezer Menezes </span></div>
             </div>
         </div>
     </div>

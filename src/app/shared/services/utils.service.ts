@@ -16,11 +16,11 @@ export class UtilsService {
     ) { }
 
     public rollbackSuccess(message: string) {
-        this.toastr.success(message, 'Sucesso');
+        this.toastr.success(message, 'Mensagem');
     }
 
     public rollbackError(message: string) {
-        this.toastr.error(message, 'Erro');
+        this.toastr.error(message, 'Atenção');
     }
 
     public alterHeader(title: string, back?: boolean) {

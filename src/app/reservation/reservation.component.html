@@ -1,7 +1,7 @@
 <section class="statistic">
     <div class="container">
         <div *ngIf="noResults; then noresults; else results"></div>
-        
+
         <ng-template #noresults>
             <no-result></no-result>
         </ng-template>
@@ -10,36 +10,36 @@
             <div class="table-responsive">
                 <table class="table table-borderless table-data">
                     <thead>
-                        <tr>
-                            <th>Laboratório</th>
-                            <th>Turma</th>
-                            <th>Data</th>
-                            <th>Hora</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Laboratório</th>
+                        <th *ngIf="hasPermAdmin">
+                            Professor
+                        </th>
+                        <th>Turma</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let reservation of reservations; let num = index">
-                            <td> {{ reservation.solicitation.laboratory.name }} </td>
-                            <td> {{ reservation.solicitation.class.name }} </td>
-                            <td [ngSwitch]="reservation.solicitation.repeate">
+                    <tr *ngFor="let reservation of reservations; let num = index">
+                        <td> {{ reservation.solicitation.laboratory.name }} </td>
+                        <td *ngIf="hasPermAdmin">
+                            {{ reservation.solicitation.class.instructor.name }} {{ reservation.solicitation.class.instructor.family_name }}
+                        </td>
+                        <td> {{ reservation.solicitation.class.name }} </td>
+                        <td [ngSwitch]="reservation.solicitation.repeate">
 
-                                <ng-template [ngSwitchCase]="'yes'">
-                                    {{ reservation.solicitation.start_date | date:'dd/MM/yyyy' }} à
-                                    {{ reservation.solicitation.end_date | date:'dd/MM/yyyy' }}
-                                </ng-template>
-                                <ng-template [ngSwitchCase]="'no'">
-                                    {{ reservation.solicitation.start_date | date:'dd/MM/yyyy' }}
-                                </ng-template>
+                            <ng-template [ngSwitchCase]="'yes'">
+                                {{ reservation.solicitation.start_date | date:'dd/MM/yyyy' }} à
+                                {{ reservation.solicitation.end_date | date:'dd/MM/yyyy' }}
+                            </ng-template>
+                            <ng-template [ngSwitchCase]="'no'">
+                                {{ reservation.solicitation.start_date | date:'dd/MM/yyyy' }}
+                            </ng-template>
 
-                            </td>
-                            <td> {{ reservation.solicitation.start_hour }} </td>
-                            <td class="buttons_actions">
-                                <button class="btn btn-edit" (click)="goDetail(user)">
-                                    <fa-icon icon="chevron-right"></fa-icon>
-                                </button>
-                            </td>
-                        </tr>
+                        </td>
+                        <td> {{ reservation.solicitation.start_hour }} </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

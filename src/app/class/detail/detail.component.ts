@@ -57,7 +57,7 @@ export class DetailComponent extends DetailBaseComponent implements OnInit {
             if (!classDeleted) {
                 this.utils.rollbackError(this.msg.delete_error);
             } else {
-                this.utils.rollbackSuccess(this.msg.delete_success);
+                this.utils.rollbackSuccess(this.msg.deleted_item);
                 this.router.navigate(['classes']);
             }
         } catch (error) {
@@ -71,7 +71,7 @@ export class DetailComponent extends DetailBaseComponent implements OnInit {
     }
 
     public confirmDelete() {
-        this.dialogs.confirm(this.config.msg_confirm).subscribe(response => {
+        this.dialogs.confirm(this.config.confirm_delete_item).subscribe(response => {
             if (response) {
                 this.delete();
             }

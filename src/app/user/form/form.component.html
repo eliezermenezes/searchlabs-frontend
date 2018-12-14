@@ -18,7 +18,7 @@
                             <div class="col-lg-12" *ngIf="!isEditMode">
                                 <div class="form-group">
                                     <div [ngClass]="applyStyles('role')">
-                                        <label class="control-label" for="role"> Perfil do Usuário
+                                        <label class="control-label" for="role"> Perfil de Usuário
                                             <field-required></field-required>
                                         </label>
 
@@ -90,23 +90,6 @@
                                                placeholder="N° de telefone">
                                         <error-required [showError]="verifyFieldTouched('phone')"
                                                         messageError="Informe um telefone no formato: 92 9 9999-9999"></error-required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div [ngClass]="applyStyles('birthday')">
-                                        <label class="control-label" for="birthday"> Data de Nascimento </label>
-
-                                        <div class="input-group">
-                                            <input id="birthday" type="text" placeholder="yyyy-mm-dd" class="form-control"
-                                                   formControlName="birthday" ngbDatepicker #d1="ngbDatepicker">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text calendar" (click)="d1.toggle()">
-                                                    <fa-icon icon="calendar-alt"></fa-icon>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <invalid-date [showError]="verifyFieldDateFormat('birthday')" messageError="Informe uma data válida."></invalid-date>
                                     </div>
                                 </div>
 

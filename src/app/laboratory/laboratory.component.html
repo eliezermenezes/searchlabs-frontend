@@ -1,7 +1,8 @@
 <section class="statistic">
     <div class="btns-floating" *ngIf="hasPermissionOfAdmin">
-        <button class="btn btn-success" [routerLink]="['/laboratories/add']">
+        <button class="btn btn-info" [routerLink]="['/laboratories/add']">
             <fa-icon icon='plus' size='2x'></fa-icon>
+            Adicionar
         </button>
     </div>
 </section>
@@ -13,64 +14,43 @@
         <no-result></no-result>
     </ng-template>
     <ng-template #results>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-xl-6 col-md-12">
-                        <div class="form-group">
-                            <input type="text" placeholder="Nome" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-xl-5 col-md-12">
-                        <div class="form-group">
-                            <input type="text" placeholder="Localização" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-xl-1 col-md-12">
-                        <button class="btn btn-primary btn-search">
-                            <fa-icon icon="search"></fa-icon>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="table-responsive">
             <table class="table table-borderless table-data">
                 <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Localização</th>
-                        <th>Situação</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Nome</th>
+                    <th>Localização</th>
+                    <th>Situação</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let laboratory of laboratories">
-                        <td>
-                            <a (click)="goDetail(laboratory)">
-                                {{ laboratory.name }}
-                            </a>
-                        </td>
-                        <td> {{ laboratory.localization }} </td>
-                        <td>
-                            <div *ngIf="laboratory.situation === 'ok'; then regular, else maintenance"></div>
-                            <ng-template #regular>
+                <tr *ngFor="let laboratory of laboratories">
+                    <td>
+                        <a (click)="goDetail(laboratory)">
+                            {{ laboratory.name }}
+                        </a>
+                    </td>
+                    <td> {{ laboratory.localization }} </td>
+                    <td>
+                        <div *ngIf="laboratory.situation === 'ok'; then regular, else maintenance"></div>
+                        <ng-template #regular>
                                 <span class="text-success">
                                     <fa-icon icon="check"></fa-icon> Regular
                                 </span>
-                            </ng-template>
-                            <ng-template #maintenance>
+                        </ng-template>
+                        <ng-template #maintenance>
                                 <span class="text-info">
                                     <fa-icon icon="cogs"></fa-icon> Em manutenção
                                 </span>
-                            </ng-template>
-                        </td>
-                        <td class="buttons_actions">
-                            <button class="btn btn-edit" (click)="goDetail(laboratory)">
-                                <fa-icon icon="chevron-right"></fa-icon>
-                            </button>
-                        </td>
-                    </tr>
+                        </ng-template>
+                    </td>
+                    <td class="buttons_actions">
+                        <button class="btn btn-edit" (click)="goDetail(laboratory)">
+                            <fa-icon icon="chevron-right"></fa-icon>
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

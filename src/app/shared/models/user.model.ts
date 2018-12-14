@@ -5,7 +5,6 @@ export class User {
     public family_name: string;
     public role: string;
     public phone?: string;
-    public birthday?: Date;
     public gender?: string;
     public register?: string;
     public status: string;

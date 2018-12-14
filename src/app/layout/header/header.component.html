@@ -6,9 +6,9 @@
                     <img [src]="logo" alt="Logo Searchlas">
                 </div>
                 <div class="header-button2">
-                    <div class="header-button-item js-item-menu">
+                    <div class="header-button-item js-item-menu" (click)="goProfile()">
                         <span class="user-logged">{{ userLogged.name }}</span>
-                        <fa-icon icon="user-circle" (click)="goProfile()"></fa-icon>
+                        <fa-icon icon="user-circle"></fa-icon>
                     </div>
                     <div class="header-button-item mr-0 js-sidebar-btn">
                         <fa-icon icon="sign-out-alt" (click)="doLogout()"></fa-icon>

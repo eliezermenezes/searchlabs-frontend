@@ -1,7 +1,7 @@
 <section class="statistic">
     <div class="btns-floating">
-        <button class="btn btn-success" [routerLink]="['/users/add']">
-            <fa-icon icon='user-plus' size='2x'></fa-icon>
+        <button class="btn btn-info" [routerLink]="['/users/add']">
+            <fa-icon icon='user-plus' size='2x'></fa-icon> Adicionar
         </button>
     </div>
 </section>
@@ -14,22 +14,6 @@
     </ng-template>
 
     <ng-template #results>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-xl-8 col-md-12">
-                        <div class="form-group">
-                            <input type="text" placeholder="Nome ou username" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-xl-1 col-md-12">
-                        <button class="btn btn-primary btn-search">
-                            <fa-icon icon="search"></fa-icon>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="table-responsive">
             <table class="table table-borderless table-data">
                 <thead>

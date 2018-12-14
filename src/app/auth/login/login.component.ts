@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
     public msg: MessageRequest = new MessageRequest();
     public errorLogin: string;
     public userNotFound: boolean;
+    public logo: string;
 
     constructor(
         private authService: AuthService,
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     }
 
     async ngOnInit() {
+        this.logo = '../../assets/img/logo.png';
         await this.authService.authState.subscribe((user) => {
             this.user = user;
             if (user) {

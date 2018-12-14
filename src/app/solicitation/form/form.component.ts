@@ -58,7 +58,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
         await this.changeSchedules();
         await this.verifyEditMode();
 
-        this.utils.alterHeader((this.isEditMode ? 'Alterar ' : 'Nova ') + this.titlePage);
+        this.utils.alterHeader((this.isEditMode ? 'Alterar ' : 'Nova ') + this.titlePage, true);
 
         await this.defineDataFormGroup();
         this.loading = false;
@@ -82,9 +82,9 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const solicitationCreated = await this.solicitationService.create(valuesSubmit);
             if (solicitationCreated) {
                 this.router.navigate(['solicitations']);
-                this.utils.rollbackSuccess(this.msg.register_success);
+                this.utils.rollbackSuccess(this.msg.registed_solicitation);
             } else {
-                this.utils.rollbackError(this.msg.register_error);
+                this.utils.rollbackError(this.msg.create_error);
             }
         } catch (e) {
             console.log(e);
@@ -97,7 +97,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const solicitationUpdated = await this.solicitationService.update(this.solicitation.id, valuesSubmit);
             if (solicitationUpdated) {
                 this.router.navigate(['solicitations']);
-                this.utils.rollbackSuccess(this.msg.alter_success);
+                this.utils.rollbackSuccess(this.msg.updated_solicitation);
             } else {
                 this.utils.rollbackError(this.msg.alter_error);
             }

@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
     }
 
     public confirmDelete() {
-        this.dialogs.confirm(this.config.msg_des_account).subscribe(response => {
+        this.dialogs.confirm(this.config.confirm_delete_account).subscribe(response => {
             if (response) {
                 this.delete();
             }

@@ -3,6 +3,7 @@ import { UtilsService } from '../shared/services/utils.service';
 import { ReservationService } from './reservation.service';
 import { Reservation } from '../shared/models/reservation.model';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticateService } from '../auth/authenticate.service';
 
 @Component({
     selector: 'app-reservation',
@@ -15,11 +16,13 @@ export class ReservationComponent implements OnInit {
     public reservation: Reservation;
     public reservations: Reservation[];
     public noResults: boolean;
+    public hasPermAdmin: boolean;
 
     constructor(
         private reservationService: ReservationService,
         private toastr: ToastrService,
-        private utilsService: UtilsService
+        private utilsService: UtilsService,
+        private auth: AuthenticateService
     ) {
     }
 
@@ -27,7 +30,7 @@ export class ReservationComponent implements OnInit {
         this.utilsService.alterHeader('Reservas de laboratórios');
         this.reservation = new Reservation();
         this.reservations = new Array<Reservation>();
-
+        this.hasPermAdmin = this.auth.getUserAuth().role === 'administrator';
         this.listLaboratories();
     }
 

@@ -69,7 +69,7 @@ export class TopicFormComponent implements OnInit {
             if (topicCreated) {
                 this.formulario.reset();
                 this.emitFeedbackForGetter();
-                this.utils.rollbackSuccess(this.msg.create_success);
+                this.utils.rollbackSuccess(this.msg.created_item);
             } else {
                 this.utils.rollbackError(this.msg.create_error);
             }
@@ -86,7 +86,7 @@ export class TopicFormComponent implements OnInit {
             if (topicUpdated) {
                 this.rollbackTopics();
                 this.emitFeedbackForGetter();
-                this.utils.rollbackSuccess(this.msg.alter_success);
+                this.utils.rollbackSuccess(this.msg.updated_item);
             } else {
                 this.utils.rollbackError(this.msg.alter_error);
             }

@@ -35,13 +35,6 @@
                     </h5>
 
                     <span class="mt-5">
-                        Data de Nascimento:
-                    </span>
-                    <h5>
-                        {{ user.birthday ? user.birthday : 'Não informada' }}
-                    </h5>
-
-                    <span class="mt-5">
                         Sexo:
                     </span>
                     <div *ngIf="user.gender; then gender, else nogender"></div>

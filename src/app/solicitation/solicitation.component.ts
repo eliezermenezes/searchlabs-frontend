@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UtilsService } from './../shared/services/utils.service';
 import { Solicitation } from '../shared/models/solicitation.model';
 import { SolicitationService } from './solicitation.service';
+import { AuthenticateService } from '../auth/authenticate.service';
 
 @Component({
     selector: 'app-solicitation',
@@ -15,17 +16,20 @@ export class SolicitationComponent implements OnInit {
 
     public solicitations: Solicitation[];
     public noResults: boolean;
+    public hasPermTeacher: boolean;
 
     constructor(
         private utilsService: UtilsService,
         private solicitationService: SolicitationService,
-        private router: Router
+        private router: Router,
+        private authService: AuthenticateService
         ) { }
 
     ngOnInit() {
         this.utilsService.alterHeader('Solicitações de Reservas');
 
         this.solicitations = new Array<Solicitation>();
+        this.hasPermTeacher = this.authService.getUserAuth().role === 'teacher';
         this.listSolicitations();
     }
 

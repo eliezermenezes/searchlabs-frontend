@@ -3,10 +3,11 @@
     top: 0;
     bottom: 0;
     right: 0;
-
+/*
     background: #DE6262;
     background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
     background: linear-gradient(to bottom, #FFB88C, #DE6262);
+*/
     width: 100%;
     padding: 50px 0;
     height: 100vh;
@@ -19,12 +20,13 @@
     .login-sec {
         padding: 50px 30px;
         position: relative;
+        text-align: center;
 
         .login-banner {
             background-color: white;
             padding: 50px 30px;
             border-radius: 10px;
-            border: 5px solid #ed8f77;
+            border: 2px solid #63d9e1;
 
             .copy-text {
                 position: absolute;
@@ -32,11 +34,11 @@
                 bottom: 20px;
                 font-size: 15px;
                 text-align: center;
+            }
 
-                span {
-                    color: white;
-                    text-transform: uppercase;
-                    font-weight: 400;
+            @media (max-width: 392px) {
+                .copy-text {
+                    bottom: 0;
                 }
             }
 
@@ -44,21 +46,21 @@
                 margin-bottom: 20px;
                 font-weight: 800;
                 font-size: 30px;
-                color: #DE6262;
+                color: #b1b1b1;
             }
 
             h3 {
                 text-align: center;
                 font-size: 16px;
                 margin-bottom: 20px;
-                color: #e26e67;
+                color: #DE6262;
             }
 
             h2:after {
                 content: " ";
                 width: 100px;
                 height: 5px;
-                background: #FEB58A;
+                background: #a8a8a8;
                 display: block;
                 margin-top: 20px;
                 border-radius: 3px;
@@ -67,11 +69,19 @@
             }
 
             .btn-social {
+                margin-top: 20px;
                 text-transform: uppercase;
-                background-color: #e26e67;
-                color: white;
                 font-weight: 500;
             }
+        }
+
+        img {
+            margin-top: -100px;
+            margin-bottom: -75px;
+        }
+
+        .text-muted {
+            font-weight: normal;
         }
     }
 }

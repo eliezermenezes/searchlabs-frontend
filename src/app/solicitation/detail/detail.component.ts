@@ -71,7 +71,7 @@ export class DetailComponent extends DetailBaseComponent implements OnInit {
     }
 
     public confirmAccept() {
-        this.dialogs.prompt(this.config.justify_answer, this.config.accept).subscribe((response: any) => {
+        this.dialogs.prompt(`${this.config.confirm_accept} ${this.config.justify_answer}`, this.config.accept).subscribe((response: any) => {
             if (response.result) {
                 this.accept(response.value);
             }
@@ -79,7 +79,7 @@ export class DetailComponent extends DetailBaseComponent implements OnInit {
     }
 
     public confirmRefuse() {
-        this.dialogs.prompt(this.config.justify_answer, this.config.refuse).subscribe((response: any) => {
+        this.dialogs.prompt(`${this.config.confirm_refuse} ${this.config.justify_answer}`, this.config.refuse).subscribe((response: any) => {
             if (response.result) {
                 this.refuse(response.value);
             }
@@ -87,7 +87,7 @@ export class DetailComponent extends DetailBaseComponent implements OnInit {
     }
 
     public confirmCancel() {
-        this.dialogs.prompt(this.config.justify_cancel, this.config.cancel).subscribe((response: any) => {
+        this.dialogs.prompt(`${this.config.confirm_cancel} ${this.config.justify_cancel}`, this.config.cancel).subscribe((response: any) => {
             if (response.result) {
                 this.cancel(response.value);
             }
@@ -95,7 +95,7 @@ export class DetailComponent extends DetailBaseComponent implements OnInit {
     }
 
     public confirmDelete() {
-        this.dialogs.confirm(this.config.msg_confirm).subscribe(response => {
+        this.dialogs.confirm(this.config.confirm_delete_item).subscribe(response => {
             if (response) {
                 this.delete();
             }
@@ -154,7 +154,7 @@ export class DetailComponent extends DetailBaseComponent implements OnInit {
         try {
             const deleted = await this.solicitationService.delete(this.solicitation.id);
             if (deleted) {
-                this.utils.rollbackSuccess(this.msg.delete_success);
+                this.utils.rollbackSuccess(this.msg.deleted_item);
                 this.router.navigate(['solicitations']);
             } else {
                 this.utils.rollbackError(this.msg.delete_error);

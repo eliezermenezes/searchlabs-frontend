@@ -88,13 +88,13 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const labCreated = await this.laboratoryService.create(valuesSubmit);
             if (labCreated) {
                 this.router.navigate(['laboratories']);
-                this.utils.rollbackSuccess(this.msg.create_success);
+                this.utils.rollbackSuccess(this.msg.create_lab);
             } else {
                 this.utils.rollbackError(this.msg.create_error);
             }
         } catch (e) {
             console.log(e);
-            this.utils.rollbackError(this.msg.refuse_error);
+            this.utils.rollbackError(this.msg.error_request);
         }
     }
 
@@ -103,7 +103,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const labUpdated = await this.laboratoryService.update(this.laboratory.id, valuesSubmit);
             if (labUpdated) {
                 this.router.navigate(['laboratories']);
-                this.utils.rollbackSuccess(this.msg.alter_success);
+                this.utils.rollbackSuccess(this.msg.updated_lab);
             } else {
                 this.utils.rollbackError(this.msg.alter_error);
             }

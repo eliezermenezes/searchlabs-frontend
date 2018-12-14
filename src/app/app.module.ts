@@ -107,7 +107,7 @@ export function provideConfig() {
             preventDuplicates: false,
             progressBar: true,
             progressAnimation: 'increasing',
-            timeOut: 2000
+            timeOut: 5000
         }),
         ModalModule.forRoot(),
         TabsModule.forRoot(),

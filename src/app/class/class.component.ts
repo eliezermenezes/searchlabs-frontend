@@ -24,7 +24,7 @@ export class ClassComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.utils.alterHeader('Classes');
+        this.utils.alterHeader('Turmas cadastradas');
         this.classes = new Array<Class>();
         this.verifyPermission();
         this.listClasses();

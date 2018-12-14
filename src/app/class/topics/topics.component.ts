@@ -86,7 +86,7 @@ export class TopicsComponent implements OnInit, OnDestroy {
         try {
             const topicDeleted = await this.topicsService.delete(topic.id);
             if (topicDeleted) {
-                this.utils.rollbackSuccess(this.msg.delete_success);
+                this.utils.rollbackSuccess(this.msg.deleted_item);
                 this.getTopics();
             } else {
                 this.utils.rollbackError(this.msg.delete_error);

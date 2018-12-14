@@ -49,7 +49,6 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             family_name: usuario ? usuario.family_name : null,
             role: usuario ? usuario.role : this.roles[0],
             phone: usuario ? usuario.phone : null,
-            birthday: usuario ? this.formattedDate(usuario.birthday) : null,
             gender: usuario ? this.defineGender(usuario.gender) : null
         };
         await this.createFormGroup(dataForm);
@@ -74,7 +73,6 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             family_name: [dataForm.family_name, this.isEditMode ? this.required() : null],
             role: [dataForm.role, [this.required()]],
             phone: [dataForm.phone, [this.phone()]],
-            birthday: [dataForm.birthday],
             gender: [dataForm.gender]
         });
     }
@@ -96,7 +94,6 @@ export class FormComponent extends BaseFormComponent implements OnInit {
         if (!this.isEditMode) {
             delete this.formulario.value.name;
             delete this.formulario.value.family_name;
-            delete this.formulario.value.birthday;
             delete this.formulario.value.phone;
             delete this.formulario.value.gender;
         }
@@ -109,11 +106,6 @@ export class FormComponent extends BaseFormComponent implements OnInit {
 
             if (valuesSubmit.gender) {
                 valuesSubmit.gender = valuesSubmit.gender.value;
-            }
-
-            if (valuesSubmit.birthday) {
-                let date = valuesSubmit.birthday
-                valuesSubmit.birthday = this.formattedDatePersiste(new Date(`${date.year}-${date.month}-${date.day}`));
             }
 
             delete valuesSubmit.username;
@@ -130,13 +122,13 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const labCreated = await this.userService.create(valuesSubmit);
             if (labCreated) {
                 this.router.navigate(['users']);
-                this.utils.rollbackSuccess(this.msg.create_success);
+                this.utils.rollbackSuccess(this.msg.created_user);
             } else {
                 this.utils.rollbackError(this.msg.create_error);
             }
         } catch (e) {
             console.log(e);
-            this.utils.rollbackError(this.msg.refuse_error);
+            this.utils.rollbackError(this.msg.error_request);
         }
     }
 
@@ -145,7 +137,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const labUpdated = await this.userService.update(this.user.id, valuesSubmit);
             if (labUpdated) {
                 this.router.navigate(['/users/profile']);
-                this.utils.rollbackSuccess(this.msg.alter_success);
+                this.utils.rollbackSuccess(this.msg.updated_user);
             } else {
                 this.utils.rollbackError(this.msg.alter_error);
             }

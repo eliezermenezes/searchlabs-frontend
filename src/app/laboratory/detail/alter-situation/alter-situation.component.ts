@@ -67,7 +67,7 @@ export class AlterSituationComponent implements OnInit {
             try {
                 const alterSituation = await this.laboratoryService.alterSituation(this.laboratory.id, value);
                 if (alterSituation) {
-                    this.utils.rollbackSuccess(this.msg.alter_success);
+                    this.utils.rollbackSuccess(this.msg.updated_item);
                     this.resp.emit(this.laboratory.id);
                 } else {
                     this.utils.rollbackError(this.msg.alter_error);

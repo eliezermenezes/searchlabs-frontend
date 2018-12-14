@@ -88,13 +88,13 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const classCreated = await this.classService.create(valuesSubmit);
             if (classCreated) {
                 this.router.navigate(['classes']);
-                this.utils.rollbackSuccess(this.msg.create_success);
+                this.utils.rollbackSuccess(this.msg.created_class);
             } else {
                 this.utils.rollbackError(this.msg.create_error);
             }
         } catch (e) {
             console.log(e);
-            this.utils.rollbackError(this.msg.refuse_error);
+            this.utils.rollbackError(this.msg.error_request);
         }
     }
 
@@ -103,7 +103,7 @@ export class FormComponent extends BaseFormComponent implements OnInit {
             const classUpdated = await this.classService.update(this.class.id, valuesSubmit);
             if (classUpdated) {
                 this.router.navigate(['classes']);
-                this.utils.rollbackSuccess(this.msg.alter_success);
+                this.utils.rollbackSuccess(this.msg.updated_class);
             } else {
                 this.utils.rollbackError(this.msg.alter_error);
             }

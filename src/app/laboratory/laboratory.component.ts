@@ -24,7 +24,7 @@ export class LaboratoryComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.utils.alterHeader('Laboratórios');
+        this.utils.alterHeader('Laboratórios de Informática');
         this.laboratories = new Array<Laboratory>();
         this.verifyPermission();
         this.listLaboratories();
